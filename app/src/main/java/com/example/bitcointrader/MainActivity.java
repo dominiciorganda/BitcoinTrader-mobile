@@ -17,6 +17,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
+    private String url = "http://192.168.56.1:8081";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(this);
         TextView tv1 = (TextView) findViewById(R.id.actualPrice);
-        String url = "http://localhost:8081/getActual";
         jsonParse();
     }
 
     private void jsonParse() {
         System.out.println("jk");
-        String url = "http://192.168.56.1:8081/getActual";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url+"/getActual", null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
