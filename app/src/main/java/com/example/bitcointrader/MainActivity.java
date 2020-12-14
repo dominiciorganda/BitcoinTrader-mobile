@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         requestQueue = Volley.newRequestQueue(this);
+        refreshActualValue();
+        getValues();
+
+    }
+
+    public void refreshActualValue(){
         final Handler handler = new Handler();
         Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
@@ -51,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getActualValue() {
-        System.out.println("aiiciiiiii");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url+"/getActual", null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -66,9 +71,58 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                }, (Response.ErrorListener) error -> {
-                    error.printStackTrace();
-                });
+                }, (Response.ErrorListener) Throwable::printStackTrace);
+        requestQueue.add(request);
+    }
+
+    private void getValues() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url+"/getMax", null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gson = new Gson();
+                            String json = response.toString();
+                            Bitcoin max = gson.fromJson(json, Bitcoin.class);
+                            TextView maxPrice = (TextView) findViewById(R.id.maxPrice);
+                            maxPrice.setText(max.showPrice());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, (Response.ErrorListener) Throwable::printStackTrace);
+        requestQueue.add(request);
+        request = new JsonObjectRequest(Request.Method.GET, url+"/getAnualMax", null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gson = new Gson();
+                            String json = response.toString();
+                            Bitcoin anualmax = gson.fromJson(json, Bitcoin.class);
+                            TextView anualMaxPrice = (TextView) findViewById(R.id.anualMax);
+                            anualMaxPrice.setText(anualmax.showPrice());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, (Response.ErrorListener) Throwable::printStackTrace);
+        requestQueue.add(request);
+        request = new JsonObjectRequest(Request.Method.GET, url+"/getAnualMin", null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gson = new Gson();
+                            String json = response.toString();
+                            Bitcoin anualmin= gson.fromJson(json, Bitcoin.class);
+                            TextView anualMinPrice = (TextView) findViewById(R.id.anualMin);
+                            anualMinPrice.setText(anualmin.showPrice());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, (Response.ErrorListener) Throwable::printStackTrace);
         requestQueue.add(request);
     }
 }
