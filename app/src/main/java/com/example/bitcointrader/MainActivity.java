@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -224,10 +225,14 @@ public class MainActivity extends AppCompatActivity {
         chart.getLegend().setEnabled(false);
         chart.invalidate(); // refresh
 
+
+        IMarker marker = new Popup(MainActivity.this, R.layout.popup);
+        chart.setMarker(marker);
+
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                Toast.makeText(MainActivity.this, "The text you want to display", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "The text you want to display", Toast.LENGTH_LONG).show();
 
                 float x=e.getX();
                 float y=e.getY();
