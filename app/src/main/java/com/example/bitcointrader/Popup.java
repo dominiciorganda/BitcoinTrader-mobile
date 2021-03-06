@@ -8,14 +8,20 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Popup extends MarkerView {
 
     private TextView tvContent;
 
-    public Popup(Context context, int layoutResource) {
+    private List<Bitcoin> chartBitcoins = new ArrayList<>();
+
+    public Popup(Context context, int layoutResource, List<Bitcoin> chartBitcoins) {
         super(context, layoutResource);
         // this markerview only displays a textview
         tvContent = (TextView) findViewById(R.id.tvContent);
+        this.chartBitcoins.addAll(chartBitcoins);
     }
 
 
@@ -24,7 +30,8 @@ public class Popup extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         int value = (int) e.getY();
-        tvContent.setText("" + value); // set the entry-value as the display text
+        String date = chartBitcoins.get((int)e.getX()-1).getDate().substring(5).replace("-",".");
+        tvContent.setText("" + value+"\n"+date); // set the entry-value as the display text
         super.refreshContent(e, highlight);
     }
 

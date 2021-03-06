@@ -39,7 +39,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
-    private String url = "http://192.168.56.1:8081/BitcoinTrader";
+    private String url = "http://192.168.56.1:8081/CoinTrader/bitcoin";
     private List<Bitcoin> chartBitcoins = new ArrayList<>();
     private Bitcoin anualMin;
     private Bitcoin anualMax;
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         chart.invalidate(); // refresh
 
 
-        IMarker marker = new Popup(MainActivity.this, R.layout.popup);
+        IMarker marker = new Popup(MainActivity.this, R.layout.popup,chartBitcoins);
         chart.setMarker(marker);
 
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 float x=e.getX();
                 float y=e.getY();
                 System.out.println(x);
-                System.out.println(y);
+                System.out.println(chartBitcoins.get((int)x-1).getPrice());
             }
 
             @Override
