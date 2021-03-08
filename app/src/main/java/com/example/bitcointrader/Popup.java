@@ -15,13 +15,13 @@ public class Popup extends MarkerView {
 
     private TextView tvContent;
 
-    private List<Bitcoin> chartBitcoins = new ArrayList<>();
+    private List<Coin> chartCoins = new ArrayList<>();
 
-    public Popup(Context context, int layoutResource, List<Bitcoin> chartBitcoins) {
+    public Popup(Context context, int layoutResource, List<Coin> chartCoins) {
         super(context, layoutResource);
         // this markerview only displays a textview
         tvContent = (TextView) findViewById(R.id.tvContent);
-        this.chartBitcoins.addAll(chartBitcoins);
+        this.chartCoins.addAll(chartCoins);
     }
 
 
@@ -30,7 +30,7 @@ public class Popup extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         int value = (int) e.getY();
-        String date = chartBitcoins.get((int)e.getX()-1).getDate().substring(5).replace("-",".");
+        String date = chartCoins.get((int)e.getX()-1).getDate().substring(5).replace("-",".");
         tvContent.setText("" + value+"\n"+date); // set the entry-value as the display text
         super.refreshContent(e, highlight);
     }
