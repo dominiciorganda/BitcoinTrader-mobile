@@ -32,8 +32,9 @@ public class Coin implements Parcelable {
     public double getPrice() {
         return price;
     }
+
     public String showPrice() {
-        return "" +price;
+        return "" + price;
     }
 
     public void setPrice(double price) {

@@ -81,7 +81,7 @@ public class Chart extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (chartCoins != null && chartCoins.size()!=0) {
+        if (chartCoins != null && chartCoins.size() != 0) {
             drawChart();
         } else
             System.out.println("Error");
@@ -89,21 +89,19 @@ public class Chart extends Fragment {
     }
 
 
-
-
-    public void drawChart(){
+    public void drawChart() {
         LineChart chart = (LineChart) getView().findViewById(R.id.diagramm);
 
         List<Entry> entries = new ArrayList<Entry>();
-        int i =0;
+        int i = 0;
         for (Coin data : chartCoins) {
             i++;
 
-            entries.add(new Entry(i, (float)data.getPrice()));
+            entries.add(new Entry(i, (float) data.getPrice()));
         }
 
 
-        LineDataSet dataSet = new LineDataSet(entries,"");
+        LineDataSet dataSet = new LineDataSet(entries, "");
         LineData lineData = new LineData(dataSet);
         dataSet.setDrawFilled(true);
         dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
@@ -115,8 +113,6 @@ public class Chart extends Fragment {
         dataSet.setValueTextSize(0);
         dataSet.setDrawHorizontalHighlightIndicator(false);
         dataSet.setDrawVerticalHighlightIndicator(false);
-
-
 
 
         chart.setData(lineData);
@@ -139,10 +135,10 @@ public class Chart extends Fragment {
             public void onValueSelected(Entry e, Highlight h) {
 //                Toast.makeText(MainActivity.this, "The text you want to display", Toast.LENGTH_LONG).show();
 
-                float x=e.getX();
-                float y=e.getY();
+                float x = e.getX();
+                float y = e.getY();
                 System.out.println(x);
-                System.out.println(chartCoins.get((int)x-1).getPrice());
+                System.out.println(chartCoins.get((int) x - 1).getPrice());
             }
 
             @Override

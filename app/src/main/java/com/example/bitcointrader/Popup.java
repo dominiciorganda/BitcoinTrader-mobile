@@ -30,8 +30,8 @@ public class Popup extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         int value = (int) e.getY();
-        String date = chartCoins.get((int)e.getX()-1).getDate().substring(5).replace("-",".");
-        tvContent.setText("" + value+"\n"+date); // set the entry-value as the display text
+        String date = chartCoins.get((int) e.getX() - 1).getDate().substring(5).replace("-", ".");
+        tvContent.setText("" + value + "\n" + date); // set the entry-value as the display text
         super.refreshContent(e, highlight);
     }
 
@@ -40,7 +40,7 @@ public class Popup extends MarkerView {
     @Override
     public MPPointF getOffset() {
 
-        if(mOffset == null) {
+        if (mOffset == null) {
             // center the marker horizontally and vertically
             mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
         }
