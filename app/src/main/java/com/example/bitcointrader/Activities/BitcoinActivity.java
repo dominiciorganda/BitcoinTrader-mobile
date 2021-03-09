@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Fragments.Chart;
+import com.example.bitcointrader.Fragments.Stats;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.RequestCallBack;
 import com.example.bitcointrader.Request.RequestRetriever;
@@ -26,6 +27,7 @@ public class BitcoinActivity extends AppCompatActivity {
     private Coin anualMin = new Coin();
     private Coin anualMax = new Coin();
     private Coin max = new Coin();
+    private Coin actual = new Coin();
 
     @Override
     protected void onPause() {
@@ -52,7 +54,7 @@ public class BitcoinActivity extends AppCompatActivity {
             public void run() {
                 onResume();
             }
-        }, 500);
+        }, 1000);
     }
 
     public void refreshActualValue() {
@@ -78,7 +80,7 @@ public class BitcoinActivity extends AppCompatActivity {
         requestRetriever.getCoin(url + "/getActual", this.getApplicationContext(), new RequestCallBack<Coin>() {
             @Override
             public void onSuccess(Coin coin) {
-                Coin actual = coin;
+                actual = coin;
                 TextView actualPrice = (TextView) findViewById(R.id.actualPrice);
                 actualPrice.setText(actual.showPrice());
             }
@@ -114,14 +116,15 @@ public class BitcoinActivity extends AppCompatActivity {
     }
 
     public void fillStats() {
-        TextView maxPrice = (TextView) findViewById(R.id.maxPrice);
-        maxPrice.setText(max.showPrice());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("MAX", max);
+        bundle.putParcelable("ANUALMAX", anualMax);
+        bundle.putParcelable("ANUALMIN", anualMin);
+        bundle.putParcelable("ACTUAL", actual);
+        Stats stats = new Stats();
+        stats.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stats, stats).commit();
 
-        TextView anualMaxPrice = (TextView) findViewById(R.id.anualMax);
-        anualMaxPrice.setText(anualMax.showPrice());
-
-        TextView anualMinPrice = (TextView) findViewById(R.id.anualMin);
-        anualMinPrice.setText(anualMin.showPrice());
     }
 
     public void drawChart() {
