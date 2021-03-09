@@ -1,10 +1,16 @@
-package com.example.bitcointrader;
+package com.example.bitcointrader.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+
+import com.example.bitcointrader.Entities.Coin;
+import com.example.bitcointrader.Fragments.Chart;
+import com.example.bitcointrader.R;
+import com.example.bitcointrader.Request.RequestCallBack;
+import com.example.bitcointrader.Request.RequestRetriever;
 
 import java.util.ArrayList;
 import java.util.List;

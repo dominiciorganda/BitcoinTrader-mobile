@@ -1,4 +1,4 @@
-package com.example.bitcointrader;
+package com.example.bitcointrader.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,12 +6,13 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.SyncStateContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.bitcointrader.Entities.Coin;
+import com.example.bitcointrader.Entities.Popup;
+import com.example.bitcointrader.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.data.Entry;

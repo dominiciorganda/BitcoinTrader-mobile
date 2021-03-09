@@ -1,4 +1,4 @@
-package com.example.bitcointrader;
+package com.example.bitcointrader.Request;
 
 import android.content.Context;
 

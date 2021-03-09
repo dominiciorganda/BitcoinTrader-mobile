@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BitcoinActivity">
+    tools:context=".Activities.BitcoinActivity">
 
     <TextView
         android:id="@+id/actualPrice"

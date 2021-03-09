@@ -1,4 +1,4 @@
-package com.example.bitcointrader;
+package com.example.bitcointrader.Entities;
 
 
 import android.os.Parcel;

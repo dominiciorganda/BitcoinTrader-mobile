@@ -1,7 +1,8 @@
-package com.example.bitcointrader;
+package com.example.bitcointrader.Request;
 
 import android.content.Context;
 
+import com.example.bitcointrader.Entities.Coin;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

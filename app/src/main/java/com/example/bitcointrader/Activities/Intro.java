@@ -1,15 +1,13 @@
-package com.example.bitcointrader;
+package com.example.bitcointrader.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.bitcointrader.R;
 
 public class Intro extends AppCompatActivity {
 
