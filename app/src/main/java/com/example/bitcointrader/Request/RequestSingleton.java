@@ -45,7 +45,7 @@ public class RequestSingleton {
 //        getRequestQueue().add(req);
 //    }
 
-    public void addToRequestQueue(String url, final RequestListener<String> listener) {
+    public void addToRequestQueue(String url, final IRequestListener<String> listener) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -65,7 +65,7 @@ public class RequestSingleton {
         getRequestQueue().add(request);
     }
 
-    public void addListToRequestQueue(String url, final RequestListener<String> listener) {
+    public void addListToRequestQueue(String url, final IRequestListener<String> listener) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override

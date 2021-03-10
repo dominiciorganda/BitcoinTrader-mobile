@@ -1,5 +1,5 @@
 package com.example.bitcointrader.Request;
 
-public interface RequestListener<T> {
+public interface IRequestListener<T> {
     public void getResult(T object);
 }

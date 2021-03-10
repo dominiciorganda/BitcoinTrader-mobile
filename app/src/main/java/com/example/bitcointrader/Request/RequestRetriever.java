@@ -11,8 +11,8 @@ import java.util.List;
 
 public class RequestRetriever {
 
-    public void getCoin(String url, Context context, final RequestCallBack callBack) {
-        RequestSingleton.getInstance(context).addToRequestQueue(url, new RequestListener<String>() {
+    public void getCoin(String url, Context context, final IRequestCallBack callBack) {
+        RequestSingleton.getInstance(context).addToRequestQueue(url, new IRequestListener<String>() {
             @Override
             public void getResult(String object) {
                 if (!object.isEmpty()) {
@@ -24,8 +24,8 @@ public class RequestRetriever {
         });
     }
 
-    public void getCoinList(String url, Context context, final RequestCallBack callBack) {
-        RequestSingleton.getInstance(context).addListToRequestQueue(url, new RequestListener<String>() {
+    public void getCoinList(String url, Context context, final IRequestCallBack callBack) {
+        RequestSingleton.getInstance(context).addListToRequestQueue(url, new IRequestListener<String>() {
             @Override
             public void getResult(String object) {
                 if (!object.isEmpty()) {

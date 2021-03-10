@@ -18,11 +18,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-public class BitcoinActivity extends AppCompatActivity  implements ICoinActivity {
+public class ElrondActivity extends AppCompatActivity implements ICoinActivity{
 
     private RequestRetriever requestRetriever = new RequestRetriever();
-    private String url = "http://192.168.56.1:8081/CoinTrader/bitcoin";
+    private String url = "http://192.168.56.1:8081/CoinTrader/elrond";
     private List<Coin> chartCoins = new ArrayList<>();
     private Coin anualMin = new Coin();
     private Coin anualMax = new Coin();
@@ -32,24 +31,9 @@ public class BitcoinActivity extends AppCompatActivity  implements ICoinActivity
     private TimerTask doAsynchronousTask;
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        doAsynchronousTask.cancel();
-        timer.cancel();
-        timer.purge();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        drawChart();
-        fillStats();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bitcoin);
+        setContentView(R.layout.activity_elrond);
         getValues();
         refreshActualValue();
 
@@ -78,9 +62,24 @@ public class BitcoinActivity extends AppCompatActivity  implements ICoinActivity
             }
         };
         timer.schedule(doAsynchronousTask, 0, 30000);
-
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        doAsynchronousTask.cancel();
+        timer.cancel();
+        timer.purge();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        drawChart();
+        fillStats();
+    }
+
+    @Override
     public void getActualValue() {
         requestRetriever.getCoin(url + "/getActual", this.getApplicationContext(), new IRequestCallBack<Coin>() {
             @Override
@@ -92,6 +91,7 @@ public class BitcoinActivity extends AppCompatActivity  implements ICoinActivity
         });
     }
 
+    @Override
     public void getValues() {
         requestRetriever.getCoin(url + "/getMax", this.getApplicationContext(), new IRequestCallBack<Coin>() {
             @Override
@@ -120,6 +120,7 @@ public class BitcoinActivity extends AppCompatActivity  implements ICoinActivity
         });
     }
 
+    @Override
     public void fillStats() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("MAX", max);
@@ -129,9 +130,9 @@ public class BitcoinActivity extends AppCompatActivity  implements ICoinActivity
         Stats stats = new Stats();
         stats.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stats, stats).commit();
-
     }
 
+    @Override
     public void drawChart() {
         ArrayList<Coin> chartData = new ArrayList<Coin>();
         chartData.addAll(chartCoins);
@@ -141,6 +142,5 @@ public class BitcoinActivity extends AppCompatActivity  implements ICoinActivity
         Chart chart = new Chart();
         chart.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, chart).commit();
-
     }
 }

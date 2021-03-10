@@ -23,5 +23,21 @@ public class Intro extends AppCompatActivity {
                 startActivity(new Intent(Intro.this, BitcoinActivity.class));
             }
         });
+
+        Button ethereum = findViewById(R.id.ethereum);
+        ethereum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intro.this, EthereumActivity.class));
+            }
+        });
+
+        Button elrond = findViewById(R.id.elrond);
+        elrond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intro.this, ElrondActivity.class));
+            }
+        });
     }
 }

@@ -1,5 +1,5 @@
 package com.example.bitcointrader.Request;
 
-public interface RequestCallBack<T> {
+public interface IRequestCallBack<T> {
     public void onSuccess(T coin);
 }
