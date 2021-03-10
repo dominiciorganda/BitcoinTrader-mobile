@@ -28,11 +28,15 @@ public class BitcoinActivity extends AppCompatActivity {
     private Coin anualMax = new Coin();
     private Coin max = new Coin();
     private Coin actual = new Coin();
+    private Timer timer = new Timer();
+    private TimerTask doAsynchronousTask;
 
     @Override
     protected void onPause() {
         super.onPause();
-        getValues();
+        doAsynchronousTask.cancel();
+        timer.cancel();
+        timer.purge();
     }
 
     @Override
@@ -46,7 +50,7 @@ public class BitcoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bitcoin);
-        onPause();
+        getValues();
         refreshActualValue();
 
         new Handler().postDelayed(new Runnable() {
@@ -59,8 +63,8 @@ public class BitcoinActivity extends AppCompatActivity {
 
     public void refreshActualValue() {
         final Handler handler = new Handler();
-        Timer timer = new Timer();
-        TimerTask doAsynchronousTask = new TimerTask() {
+        timer = new Timer();
+        doAsynchronousTask = new TimerTask() {
             @Override
             public void run() {
                 handler.post(new Runnable() {
@@ -74,6 +78,7 @@ public class BitcoinActivity extends AppCompatActivity {
             }
         };
         timer.schedule(doAsynchronousTask, 0, 30000);
+
     }
 
     private void getActualValue() {
