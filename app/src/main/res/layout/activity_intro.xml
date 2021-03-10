@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Activities.Intro">
 
-    <Button
-        android:id="@+id/bitcoin"
-        android:layout_width="99dp"
-        android:layout_height="86dp"
-
-        android:background="@drawable/btc"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.202"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.225" />
-
     <!--    <RelativeLayout-->
     <!--        android:layout_width="178dp"-->
     <!--        android:layout_height="168dp"-->
@@ -45,6 +32,19 @@
     <!--    </RelativeLayout>-->
 
     <Button
+        android:id="@+id/bitcoin"
+        android:layout_width="99dp"
+        android:layout_height="86dp"
+
+        android:background="@drawable/btc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.223" />
+
+    <Button
         android:id="@+id/ethereum"
         android:layout_width="99dp"
         android:layout_height="86dp"
@@ -52,10 +52,9 @@
         android:background="@drawable/eth"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.396" />
+        app:layout_constraintVertical_bias="0.223" />
 
     <Button
         android:id="@+id/elrond"
@@ -64,10 +63,10 @@
         android:background="@drawable/erd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintHorizontal_bias="0.903"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.57" />
+        app:layout_constraintVertical_bias="0.223" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

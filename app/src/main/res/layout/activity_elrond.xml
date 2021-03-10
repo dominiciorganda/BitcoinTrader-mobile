@@ -7,7 +7,16 @@
     tools:context=".Activities.ElrondActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container_view"
+        android:id="@+id/fragment_loading_screen"
+        android:layout_width="406dp"
+        android:layout_height="457dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_chart"
         android:layout_width="406dp"
         android:layout_height="457dp"
         app:layout_constraintBottom_toBottomOf="parent"

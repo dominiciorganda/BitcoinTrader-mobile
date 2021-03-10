@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Fragments.Chart;
+import com.example.bitcointrader.Fragments.Loading;
 import com.example.bitcointrader.Fragments.Stats;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ElrondActivity extends AppCompatActivity implements ICoinActivity{
+public class ElrondActivity extends AppCompatActivity implements ICoinActivity {
 
     private RequestRetriever requestRetriever = new RequestRetriever();
     private String url = "http://192.168.56.1:8081/CoinTrader/elrond";
@@ -29,6 +31,10 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity{
     private Coin actual = new Coin();
     private Timer timer = new Timer();
     private TimerTask doAsynchronousTask;
+    private View loadingScreen;
+    private View chart;
+    private View stats;
+    private Loading loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +42,15 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity{
         setContentView(R.layout.activity_elrond);
         getValues();
         refreshActualValue();
+        setVisibilities();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 onResume();
+                loading.disableLoadingScreen();
+                stats.setVisibility(View.VISIBLE);
+                chart.setVisibility(View.VISIBLE);
             }
         }, 1000);
     }
@@ -141,6 +151,23 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity{
         bundle.putParcelableArrayList("CHART_COINS", chartData);
         Chart chart = new Chart();
         chart.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, chart).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_chart, chart).commit();
+    }
+
+    public void setVisibilities() {
+        loadingScreen = findViewById(R.id.fragment_loading_screen);
+        setLoadingScreen();
+        chart = findViewById(R.id.fragment_chart);
+        stats = findViewById(R.id.fragment_stats);
+        chart.setVisibility(View.GONE);
+        stats.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setLoadingScreen() {
+        Bundle bundle = new Bundle();
+        loading = new Loading();
+        loading.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_loading_screen, loading).commit();
     }
 }
