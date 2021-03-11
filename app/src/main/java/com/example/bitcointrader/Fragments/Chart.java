@@ -106,8 +106,14 @@ public class Chart extends Fragment {
         LineData lineData = new LineData(dataSet);
         dataSet.setDrawFilled(true);
         dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
-        dataSet.setDrawCircles(true);
-        dataSet.setDrawCircleHole(true);
+        if (chartCoins.size() > 50) {
+            dataSet.setDrawCircles(false);
+            dataSet.setDrawCircleHole(false);
+        } else {
+            dataSet.setDrawCircles(true);
+            dataSet.setDrawCircleHole(true);
+        }
+
         dataSet.setCircleHoleColor(Color.BLACK);
         dataSet.setCircleRadius(10);
         dataSet.setCircleHoleRadius(8);
