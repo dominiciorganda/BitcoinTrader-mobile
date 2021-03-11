@@ -10,4 +10,6 @@ public interface ICoinActivity {
     void drawChart();
 
     void setLoadingScreen();
+
+    void setChartDays();
 }

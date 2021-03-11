@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.bitcointrader.R;
 
@@ -16,7 +17,7 @@ public class Intro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        Button bitcoin = findViewById(R.id.bitcoin);
+        LinearLayout bitcoin = findViewById(R.id.bitcoin);
         bitcoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -24,7 +25,7 @@ public class Intro extends AppCompatActivity {
             }
         });
 
-        Button ethereum = findViewById(R.id.ethereum);
+        LinearLayout ethereum = findViewById(R.id.ethereum);
         ethereum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,7 +33,7 @@ public class Intro extends AppCompatActivity {
             }
         });
 
-        Button elrond = findViewById(R.id.elrond);
+        LinearLayout elrond = findViewById(R.id.elrond);
         elrond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

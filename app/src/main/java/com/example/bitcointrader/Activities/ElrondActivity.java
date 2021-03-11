@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Fragments.Chart;
+import com.example.bitcointrader.Fragments.ChartDays;
+import com.example.bitcointrader.Fragments.IFragmentToActivity;
 import com.example.bitcointrader.Fragments.Loading;
 import com.example.bitcointrader.Fragments.Stats;
 import com.example.bitcointrader.R;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ElrondActivity extends AppCompatActivity implements ICoinActivity {
+public class ElrondActivity extends AppCompatActivity implements ICoinActivity, IFragmentToActivity {
 
     private RequestRetriever requestRetriever = new RequestRetriever();
     private String url = "http://192.168.56.1:8081/CoinTrader/elrond";
@@ -35,6 +37,7 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity {
     private View chart;
     private View stats;
     private Loading loading;
+    private View chartDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +54,10 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity {
                 loading.disableLoadingScreen();
                 stats.setVisibility(View.VISIBLE);
                 chart.setVisibility(View.VISIBLE);
+                chartDays.setVisibility(View.VISIBLE);
             }
         }, 1000);
+        setChartDays();
     }
 
     public void refreshActualValue() {
@@ -87,6 +92,7 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity {
         super.onResume();
         drawChart();
         fillStats();
+        setChartDays();
     }
 
     @Override
@@ -159,8 +165,10 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity {
         setLoadingScreen();
         chart = findViewById(R.id.fragment_chart);
         stats = findViewById(R.id.fragment_stats);
+        chartDays = findViewById(R.id.fragment_daysnumber);
         chart.setVisibility(View.GONE);
         stats.setVisibility(View.GONE);
+        chartDays.setVisibility(View.GONE);
     }
 
     @Override
@@ -169,5 +177,25 @@ public class ElrondActivity extends AppCompatActivity implements ICoinActivity {
         loading = new Loading();
         loading.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_loading_screen, loading).commit();
+    }
+
+    @Override
+    public void setChartDays() {
+        Bundle bundle = new Bundle();
+        ChartDays chartDays = new ChartDays();
+        chartDays.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_daysnumber, chartDays).commit();
+    }
+
+    @Override
+    public void communicate(String data) {
+        requestRetriever.getCoinList(url + "/getLastX/" + data, getApplicationContext(), new IRequestCallBack<List<Coin>>() {
+            @Override
+            public void onSuccess(List<Coin> coins) {
+                chartCoins = new ArrayList<>();
+                chartCoins.addAll(coins);
+                drawChart();
+            }
+        });
     }
 }
