@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ElrondActivity"></activity>
+        <activity android:name=".Activities.DogecoinActivity"></activity>
+        <activity android:name=".Activities.DashActivity" />
+        <activity android:name=".Activities.LitecoinActivity" />
+        <activity android:name=".Activities.ElrondActivity" />
         <activity android:name=".Activities.EthereumActivity" />
         <activity android:name=".Activities.Intro">
             <intent-filter>
