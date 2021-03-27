@@ -16,7 +16,9 @@ import com.example.bitcointrader.Fragments.Stats;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
 import com.example.bitcointrader.Request.RequestRetriever;
+import com.example.bitcointrader.util.Urls;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -26,7 +28,6 @@ import java.util.TimerTask;
 public class BitcoinActivity extends AppCompatActivity implements ICoinActivity, IFragmentToActivity {
 
     private RequestRetriever requestRetriever = new RequestRetriever();
-    private String url = "http://192.168.56.1:8081/CoinTrader/bitcoin";
     private List<Coin> chartCoins = new ArrayList<>();
     private Coin anualMin = new Coin();
     private Coin anualMax = new Coin();
@@ -101,7 +102,7 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
     }
 
     public void getActualValue() {
-        requestRetriever.getCoin(url + "/getActual", this.getApplicationContext(), new IRequestCallBack<Coin>() {
+        requestRetriever.getCoin(Urls.BITCOIN + "/getActual", this.getApplicationContext(), new IRequestCallBack<Coin>() {
             @Override
             public void onSuccess(Coin coin) {
                 actual = coin;
@@ -112,25 +113,25 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
     }
 
     public void getValues() {
-        requestRetriever.getCoin(url + "/getMax", this.getApplicationContext(), new IRequestCallBack<Coin>() {
+        requestRetriever.getCoin(Urls.BITCOIN + "/getMax", this.getApplicationContext(), new IRequestCallBack<Coin>() {
             @Override
             public void onSuccess(Coin coin) {
                 max = coin;
             }
         });
-        requestRetriever.getCoin(url + "/getAnualMax", this.getApplicationContext(), new IRequestCallBack<Coin>() {
+        requestRetriever.getCoin(Urls.BITCOIN + "/getAnualMax", this.getApplicationContext(), new IRequestCallBack<Coin>() {
             @Override
             public void onSuccess(Coin coin) {
                 anualMax = coin;
             }
         });
-        requestRetriever.getCoin(url + "/getAnualMin", this.getApplicationContext(), new IRequestCallBack<Coin>() {
+        requestRetriever.getCoin(Urls.BITCOIN + "/getAnualMin", this.getApplicationContext(), new IRequestCallBack<Coin>() {
             @Override
             public void onSuccess(Coin coin) {
                 anualMin = coin;
             }
         });
-        requestRetriever.getCoinList(url + "/getLastMonth", this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
+        requestRetriever.getCoinList(Urls.BITCOIN + "/getLastMonth", this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
             @Override
             public void onSuccess(List<Coin> coins) {
                 chartCoins = new ArrayList<>();
@@ -190,7 +191,7 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
 
     @Override
     public void communicate(String data) {
-        requestRetriever.getCoinList(url + "/getLastX/" + data, getApplicationContext(), new IRequestCallBack<List<Coin>>() {
+        requestRetriever.getCoinList(Urls.BITCOIN + "/getLastX/" + data, getApplicationContext(), new IRequestCallBack<List<Coin>>() {
             @Override
             public void onSuccess(List<Coin> coins) {
                 chartCoins = new ArrayList<>();

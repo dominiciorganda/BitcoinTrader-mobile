@@ -3,6 +3,7 @@
     package="com.example.bitcointrader">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,18 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.DogecoinActivity"></activity>
-        <activity android:name=".Activities.DashActivity" />
-        <activity android:name=".Activities.LitecoinActivity" />
-        <activity android:name=".Activities.ElrondActivity" />
-        <activity android:name=".Activities.EthereumActivity" />
-        <activity android:name=".Activities.Intro">
+        <activity android:name=".Activities.RegisterActivity"></activity>
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.DogecoinActivity" />
+        <activity android:name=".Activities.DashActivity" />
+        <activity android:name=".Activities.LitecoinActivity" />
+        <activity android:name=".Activities.ElrondActivity" />
+        <activity android:name=".Activities.EthereumActivity" />
+        <activity android:name=".Activities.Intro"></activity>
         <activity android:name=".Activities.BitcoinActivity" />
     </application>
 

@@ -3,7 +3,11 @@ package com.example.bitcointrader.Request;
 import android.content.Context;
 
 import com.example.bitcointrader.Entities.Coin;
+import com.example.bitcointrader.Entities.CommonUtils;
+import com.example.bitcointrader.Entities.User;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +41,37 @@ public class RequestRetriever {
                 }
             }
         });
+    }
+
+    public void login(String url, Context context, final IRequestCallBack callBack, JSONObject body) {
+        RequestSingleton.getInstance(context).addLoginToRequestQueue(url, new IRequestListener<String>() {
+            @Override
+            public void getResult(String object) {
+                if (!object.isEmpty()) {
+                    if (object.equals("error"))
+                        callBack.onSuccess(object);
+                    else {
+                        Gson gson = new Gson();
+                        User user = gson.fromJson(object, User.class);
+                        CommonUtils.putPrefString(context, "token", user.getToken());
+                        CommonUtils.putPrefString(context, "username", user.getUsername());
+                        callBack.onSuccess("succes");
+                    }
+                }
+            }
+        }, body);
+    }
+
+    public void register(String url, Context context, final IRequestCallBack callBack, JSONObject body) {
+        RequestSingleton.getInstance(context).addRegisterToRequestQueue(url, new IRequestListener<String>() {
+            @Override
+            public void getResult(String object) {
+                System.out.println(object);
+                if (!object.isEmpty()) {
+                    callBack.onSuccess(object);
+                }
+            }
+        }, body);
     }
 
 
