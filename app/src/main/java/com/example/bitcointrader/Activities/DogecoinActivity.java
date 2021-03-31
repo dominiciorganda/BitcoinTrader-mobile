@@ -144,6 +144,7 @@ public class DogecoinActivity extends AppCompatActivity implements ICoinActivity
         bundle.putParcelable("ANUALMAX", anualMax);
         bundle.putParcelable("ANUALMIN", anualMin);
         bundle.putParcelable("ACTUAL", actual);
+        bundle.putString("URL", Urls.DOGECOIN);
         Stats stats = new Stats();
         stats.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stats, stats).commit();

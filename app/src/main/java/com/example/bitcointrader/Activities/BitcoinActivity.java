@@ -164,6 +164,7 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
         bundle.putParcelable("ANUALMAX", anualMax);
         bundle.putParcelable("ANUALMIN", anualMin);
         bundle.putParcelable("ACTUAL", actual);
+        bundle.putString("URL", Urls.BITCOIN);
         Stats stats = new Stats();
         stats.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stats, stats).commit();

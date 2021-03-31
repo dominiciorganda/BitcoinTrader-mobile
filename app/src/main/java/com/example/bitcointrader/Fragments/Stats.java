@@ -1,5 +1,6 @@
 package com.example.bitcointrader.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,8 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bitcointrader.Activities.PredictionActivity;
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.R;
 
@@ -26,10 +29,13 @@ public class Stats extends Fragment {
     private static final String ACTUAL = "actualCoin";
     private static final String ANUALMAX = "anualMax";
     private static final String ANUALMIN = "anualMin";
+    private static final String URL = "URL";
 
 
     // TODO: Rename and change types of parameters
     private Coin maxCoin, anualMax, anualMin, actualCoin;
+    private Button prediction;
+    private String url;
 
     public Stats() {
         // Required empty public constructor
@@ -49,6 +55,7 @@ public class Stats extends Fragment {
         args.putParcelable(ANUALMAX, anualMax);
         args.putParcelable(ANUALMIN, anualMin);
         args.putParcelable(ACTUAL, actualCoin);
+
 
         fragment.setArguments(args);
         return fragment;
@@ -70,8 +77,10 @@ public class Stats extends Fragment {
             anualMax = getArguments().getParcelable("ANUALMAX");
             anualMin = getArguments().getParcelable("ANUALMIN");
             actualCoin = getArguments().getParcelable("ACTUAL");
+            url = getArguments().getString("URL");
         } else
             System.out.println("ok");
+        prediction = view.findViewById(R.id.prediction);
         return view;
     }
 
@@ -83,6 +92,18 @@ public class Stats extends Fragment {
             fillStats();
         } else
             System.out.println("Error");
+
+        if (prediction != null && url != null) {
+            prediction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), PredictionActivity.class);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
+                    System.out.println("hello");
+                }
+            });
+        }
 
     }
 
