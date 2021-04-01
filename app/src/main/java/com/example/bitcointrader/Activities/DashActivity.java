@@ -157,6 +157,7 @@ public class DashActivity extends AppCompatActivity implements ICoinActivity, IF
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("CHART_COINS", chartData);
+        bundle.putString("URL", Urls.DASH);
         Chart chart = new Chart();
         chart.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_chart, chart).commit();

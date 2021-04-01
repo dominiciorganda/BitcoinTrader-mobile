@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.Popup;
 import com.example.bitcointrader.R;
+import com.example.bitcointrader.util.CoinUrls;
+import com.example.bitcointrader.util.Urls;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.data.Entry;
@@ -34,9 +36,11 @@ public class Chart extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CHART_COINS = "coins";
+    private static final String URL = "URL";
 
     // TODO: Rename and change types of parameters
     private ArrayList<Coin> chartCoins;
+    private String url;
 
 
     public Chart() {
@@ -71,6 +75,7 @@ public class Chart extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chart, container, false);
         if (getArguments() != null) {
             chartCoins = getArguments().getParcelableArrayList("CHART_COINS");
+            url = getArguments().getString("URL");
         } else
             System.out.println("ok");
 
@@ -105,7 +110,31 @@ public class Chart extends Fragment {
         LineDataSet dataSet = new LineDataSet(entries, "");
         LineData lineData = new LineData(dataSet);
         dataSet.setDrawFilled(true);
-        dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
+
+        if (url != null) {
+            CoinUrls coinUrls = CoinUrls.find(url);
+
+            switch (coinUrls) {
+                case BITCOIN:
+                case DOGECOIN:
+                    dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.orange));
+                    break;
+                case ETHEREUM:
+                case LITECOIN:
+                    dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.lightblue));
+                    break;
+                case ELROND:
+                    dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.darkblue));
+                    break;
+                default:
+                    dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
+            }
+        }
+        else
+            dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
+
+
+//        dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
         if (chartCoins.size() > 50) {
             dataSet.setDrawCircles(false);
             dataSet.setDrawCircleHole(false);

@@ -157,6 +157,7 @@ public class DogecoinActivity extends AppCompatActivity implements ICoinActivity
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("CHART_COINS", chartData);
+        bundle.putString("URL", Urls.DOGECOIN);
         Chart chart = new Chart();
         chart.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_chart, chart).commit();

@@ -177,6 +177,7 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("CHART_COINS", chartData);
+        bundle.putString("URL", Urls.BITCOIN);
         Chart chart = new Chart();
         chart.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_chart, chart).commit();
