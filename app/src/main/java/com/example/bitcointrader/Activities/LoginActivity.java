@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bitcointrader.Entities.CommonUtils;
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button register = (Button) findViewById(R.id.register);
+        TextView register = (TextView) findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

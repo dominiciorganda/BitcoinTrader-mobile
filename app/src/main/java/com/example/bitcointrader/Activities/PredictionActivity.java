@@ -62,9 +62,9 @@ public class PredictionActivity extends AppCompatActivity {
                 chart.setVisibility(View.VISIBLE);
 
             }
-        }, 3500);
+        }, 4500);
 
-        System.out.println(url);
+//        System.out.println(url);
     }
 
     public void initializeData(){
@@ -91,10 +91,10 @@ public class PredictionActivity extends AppCompatActivity {
         requestRetriever.getCoinList(url + "/prediction", this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
             @Override
             public void onSuccess(List<Coin> coins) {
-//                System.out.println(coins);
+                System.out.println(coins);
                 chartCoins = new ArrayList<>();
                 chartCoins.addAll(coins);
-//                drawChart();
+                drawChart();
             }
         });
     }
