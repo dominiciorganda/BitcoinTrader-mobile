@@ -111,16 +111,20 @@ public class Chart extends Fragment {
         LineData lineData = new LineData(dataSet);
         dataSet.setDrawFilled(true);
 
+
         if (url != null) {
             CoinUrls coinUrls = CoinUrls.find(url);
 
             switch (coinUrls) {
                 case BITCOIN:
                 case DOGECOIN:
+                case BINANCECOIN:
+                case BITCOINCASH:
                     dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.orange));
                     break;
                 case ETHEREUM:
                 case LITECOIN:
+                case FILECOIN:
                     dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.lightblue));
                     break;
                 case ELROND:

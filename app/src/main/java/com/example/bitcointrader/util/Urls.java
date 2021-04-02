@@ -8,6 +8,9 @@ public class Urls {
     public static final String LITECOIN = ROOT + "/litecoin";
     public static final String DASH = ROOT + "/dash";
     public static final String DOGECOIN = ROOT + "/dogecoin";
+    public static final String BINANCECOIN = ROOT + "/binancecoin";
+    public static final String BITCOINCASH = ROOT + "/bitcoincash";
+    public static final String FILECOIN = ROOT + "/filecoin";
     public static final String AUTH = ROOT + "/auth";
     public static final String LOGIN = AUTH + "/login";
     public static final String REGISTER = AUTH + "/register";

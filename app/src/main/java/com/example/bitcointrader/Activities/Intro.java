@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.bitcointrader.R;
+import com.example.bitcointrader.util.Urls;
 
 public class Intro extends AppCompatActivity {
 
@@ -74,6 +75,36 @@ public class Intro extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Intro.this, DogecoinActivity.class));
+            }
+        });
+
+        LinearLayout binancecoin = findViewById(R.id.binancecoin);
+        binancecoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intro.this, CoinActivity.class);
+                intent.putExtra("url", Urls.BINANCECOIN);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout bitcoincash = findViewById(R.id.bitcoincash);
+        bitcoincash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intro.this, CoinActivity.class);
+                intent.putExtra("url", Urls.BITCOINCASH);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout filecoin = findViewById(R.id.filecoin);
+        filecoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intro.this, CoinActivity.class);
+                intent.putExtra("url", Urls.FILECOIN);
+                startActivity(intent);
             }
         });
     }

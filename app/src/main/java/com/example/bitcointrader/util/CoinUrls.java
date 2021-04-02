@@ -3,7 +3,8 @@ package com.example.bitcointrader.util;
 public enum CoinUrls {
 
     BITCOIN(Urls.BITCOIN), ETHEREUM(Urls.ETHEREUM), ELROND(Urls.ELROND),
-    LITECOIN(Urls.LITECOIN), DASH(Urls.DASH), DOGECOIN(Urls.DOGECOIN);
+    LITECOIN(Urls.LITECOIN), DASH(Urls.DASH), DOGECOIN(Urls.DOGECOIN),
+    BINANCECOIN(Urls.BINANCECOIN), BITCOINCASH(Urls.BITCOINCASH), FILECOIN(Urls.FILECOIN);
 
     private final String url;
 
@@ -24,6 +25,12 @@ public enum CoinUrls {
             return DASH;
         if(string.equals(Urls.DOGECOIN))
             return DOGECOIN;
+        if(string.equals(Urls.BINANCECOIN))
+            return BINANCECOIN;
+        if(string.equals(Urls.BITCOINCASH))
+            return BITCOINCASH;
+        if(string.equals(Urls.FILECOIN))
+            return FILECOIN;
         return null;
     }
 }
