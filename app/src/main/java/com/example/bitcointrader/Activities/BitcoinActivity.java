@@ -21,6 +21,7 @@ import com.example.bitcointrader.util.Urls;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -107,7 +108,7 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
             public void onSuccess(Coin coin) {
                 actual = coin;
                 TextView actualPrice = (TextView) findViewById(R.id.actualPrice);
-                actualPrice.setText(actual.showPrice());
+                actualPrice.setText(String.format( Locale.US,"%.2f", actual.getPrice()));
             }
         });
     }
