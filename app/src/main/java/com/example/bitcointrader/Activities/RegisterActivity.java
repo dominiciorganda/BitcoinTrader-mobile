@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validate()){
+                if (validate()) {
                     JSONObject body = new JSONObject();
                     try {
                         body.put("username", registerUsername.getText().toString());
@@ -56,13 +56,12 @@ public class RegisterActivity extends AppCompatActivity {
                             if (data.equals("error"))
                                 Toast.makeText(getApplicationContext(), "Wrong register credetentials", Toast.LENGTH_SHORT).show();
                             else {
-                                Toast.makeText(getApplicationContext(),"Activate your account via email", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Activate your account via email", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                             }
                         }
                     }, body);
-                }
-                else
+                } else
                     Toast.makeText(RegisterActivity.this, "Invalid input", Toast.LENGTH_SHORT).show();
             }
         });

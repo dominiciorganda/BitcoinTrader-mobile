@@ -38,7 +38,7 @@
                 android:layout_width="128dp"
                 android:layout_height="133dp"
                 android:padding="10dp" />
-<!--                android:background="@drawable/btc"-->
+            <!--                android:background="@drawable/btc"-->
 
 
             <TextView
@@ -47,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
-<!--                android:text="BITCOIN"-->
+                android:textStyle="bold" />
+            <!--                android:text="BITCOIN"-->
 
         </LinearLayout>
 

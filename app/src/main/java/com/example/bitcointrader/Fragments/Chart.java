@@ -119,7 +119,6 @@ public class Chart extends Fragment {
                 case BITCOIN:
                 case DOGECOIN:
                 case BINANCECOIN:
-                case BITCOINCASH:
                     dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.orange));
                     break;
                 case ETHEREUM:
@@ -130,11 +129,13 @@ public class Chart extends Fragment {
                 case ELROND:
                     dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.darkblue));
                     break;
+                case BITCOINCASH:
+                    dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.lightgreen));
+                    break;
                 default:
                     dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
             }
-        }
-        else
+        } else
             dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.gradient));
 
 

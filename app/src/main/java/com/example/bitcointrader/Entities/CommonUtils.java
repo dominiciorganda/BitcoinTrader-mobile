@@ -56,12 +56,12 @@ public class CommonUtils {
         }
     }
 
-    public static void logout(Context context){
-        try{
+    public static void logout(Context context) {
+        try {
             createSharedPreferenceEditor(context);
             editor.clear();
             editor.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

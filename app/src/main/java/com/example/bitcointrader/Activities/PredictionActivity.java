@@ -67,7 +67,7 @@ public class PredictionActivity extends AppCompatActivity {
 //        System.out.println(url);
     }
 
-    public void initializeData(){
+    public void initializeData() {
         intent = getIntent();
         url = intent.getStringExtra("url");
     }

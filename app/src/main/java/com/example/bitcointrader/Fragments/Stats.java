@@ -110,7 +110,7 @@ public class Stats extends Fragment {
             });
         }
 
-        if (url != null){
+        if (url != null) {
             loadimage();
         }
 
@@ -131,7 +131,7 @@ public class Stats extends Fragment {
     }
 
 
-    public void loadimage(){
+    public void loadimage() {
         ImageView photo = (ImageView) getView().findViewById(R.id.image);
         TextView name = (TextView) getView().findViewById(R.id.text);
 

@@ -108,7 +108,7 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
             public void onSuccess(Coin coin) {
                 actual = coin;
                 TextView actualPrice = (TextView) findViewById(R.id.actualPrice);
-                actualPrice.setText(String.format( Locale.US,"%.2f", actual.getPrice()));
+                actualPrice.setText(String.format(Locale.US, "%.2f", actual.getPrice()));
             }
         });
     }

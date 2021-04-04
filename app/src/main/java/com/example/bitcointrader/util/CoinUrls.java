@@ -12,24 +12,24 @@ public enum CoinUrls {
         this.url = url;
     }
 
-    public static CoinUrls find(String string){
-        if(string.equals(Urls.BITCOIN))
+    public static CoinUrls find(String string) {
+        if (string.equals(Urls.BITCOIN))
             return BITCOIN;
-        if(string.equals(Urls.ETHEREUM))
+        if (string.equals(Urls.ETHEREUM))
             return ETHEREUM;
-        if(string.equals(Urls.ELROND))
+        if (string.equals(Urls.ELROND))
             return ELROND;
-        if(string.equals(Urls.LITECOIN))
+        if (string.equals(Urls.LITECOIN))
             return LITECOIN;
-        if(string.equals(Urls.DASH))
+        if (string.equals(Urls.DASH))
             return DASH;
-        if(string.equals(Urls.DOGECOIN))
+        if (string.equals(Urls.DOGECOIN))
             return DOGECOIN;
-        if(string.equals(Urls.BINANCECOIN))
+        if (string.equals(Urls.BINANCECOIN))
             return BINANCECOIN;
-        if(string.equals(Urls.BITCOINCASH))
+        if (string.equals(Urls.BITCOINCASH))
             return BITCOINCASH;
-        if(string.equals(Urls.FILECOIN))
+        if (string.equals(Urls.FILECOIN))
             return FILECOIN;
         return null;
     }

@@ -84,7 +84,7 @@ public class CoinActivity extends AppCompatActivity implements ICoinActivity, IF
         timer.schedule(doAsynchronousTask, 0, 30000);
     }
 
-    public void initializeData(){
+    public void initializeData() {
         intent = getIntent();
         url = intent.getStringExtra("url");
     }
@@ -137,7 +137,7 @@ public class CoinActivity extends AppCompatActivity implements ICoinActivity, IF
                 anualMin = coin;
             }
         });
-        requestRetriever.getCoinList(url+ "/getLastMonth", this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
+        requestRetriever.getCoinList(url + "/getLastMonth", this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
             @Override
             public void onSuccess(List<Coin> coins) {
                 chartCoins = new ArrayList<>();
