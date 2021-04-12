@@ -14,6 +14,7 @@ public class Urls {
     public static final String AUTH = ROOT + "/auth";
     public static final String LOGIN = AUTH + "/login";
     public static final String REGISTER = AUTH + "/register";
+    public static final String WALLET = ROOT + "/wallet";
 
 
 }

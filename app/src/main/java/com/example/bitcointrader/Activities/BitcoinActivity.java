@@ -2,6 +2,7 @@ package com.example.bitcointrader.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -108,7 +109,12 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
             public void onSuccess(Coin coin) {
                 actual = coin;
                 TextView actualPrice = (TextView) findViewById(R.id.actualPrice);
+                double oldPrice = Double.parseDouble(actualPrice.getText().toString());
                 actualPrice.setText(String.format(Locale.US, "%.2f", actual.getPrice()));
+                if(actual.getPrice()>oldPrice)
+                    actualPrice.setTextColor(Color.GREEN);
+                else
+                    actualPrice.setTextColor(Color.RED);
             }
         });
     }

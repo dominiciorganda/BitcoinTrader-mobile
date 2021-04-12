@@ -3,6 +3,7 @@ package com.example.bitcointrader.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.bitcointrader.util.Urls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -112,7 +114,13 @@ public class CoinActivity extends AppCompatActivity implements ICoinActivity, IF
             public void onSuccess(Coin coin) {
                 actual = coin;
                 TextView actualPrice = (TextView) findViewById(R.id.actualPrice);
+                double oldPrice = Double.parseDouble(actualPrice.getText().toString());
                 actualPrice.setText(actual.showPrice());
+                if(actual.getPrice()>oldPrice)
+                    actualPrice.setTextColor(Color.GREEN);
+                else
+                    actualPrice.setTextColor(Color.RED);
+
             }
         });
     }
