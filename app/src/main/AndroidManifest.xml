@@ -13,8 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.CoinActivity"></activity>
-        <activity android:name=".Activities.PredictionActivity"></activity>
+        <activity android:name=".Activities.WalletActivity"></activity>
+        <activity android:name=".Activities.Intro" />
+        <activity android:name=".Activities.CoinActivity" />
+        <activity android:name=".Activities.PredictionActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
@@ -28,7 +30,7 @@
         <activity android:name=".Activities.LitecoinActivity" />
         <activity android:name=".Activities.ElrondActivity" />
         <activity android:name=".Activities.EthereumActivity" />
-        <activity android:name=".Activities.Intro" />
+        <activity android:name=".Activities.CoinListActivity" />
         <activity android:name=".Activities.BitcoinActivity" />
     </application>
 

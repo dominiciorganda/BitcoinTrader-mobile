@@ -107,7 +107,7 @@ public class LitecoinActivity extends AppCompatActivity implements ICoinActivity
                 TextView actualPrice = (TextView) findViewById(R.id.actualPrice);
                 double oldPrice = Double.parseDouble(actualPrice.getText().toString());
                 actualPrice.setText(actual.showPrice());
-                if(actual.getPrice()>oldPrice)
+                if (actual.getPrice() > oldPrice)
                     actualPrice.setTextColor(Color.GREEN);
                 else
                     actualPrice.setTextColor(Color.RED);

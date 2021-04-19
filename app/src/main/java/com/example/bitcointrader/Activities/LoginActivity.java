@@ -14,7 +14,6 @@ import com.example.bitcointrader.Entities.CommonUtils;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
 import com.example.bitcointrader.Request.RequestRetriever;
-import com.example.bitcointrader.Request.RequestSingleton;
 import com.example.bitcointrader.util.Urls;
 
 import org.json.JSONException;

@@ -2,9 +2,12 @@ package com.example.bitcointrader.Request;
 
 import android.content.Context;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.CommonUtils;
 import com.example.bitcointrader.Entities.User;
+import com.example.bitcointrader.Entities.WalletCoin;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -72,6 +75,21 @@ public class RequestRetriever {
                 }
             }
         }, body);
+    }
+
+    public void getWallet(String url, Context context, final IRequestCallBack callBack) {
+        RequestSingleton.getInstance(context).addListToRequestQueue(url, new IRequestListener<String>() {
+            @Override
+            public void getResult(String object) {
+                if (!object.isEmpty()) {
+                    Gson gson = new Gson();
+                    WalletCoin[] walletCoins = gson.fromJson(object, WalletCoin[].class);
+                    List<WalletCoin> coins = new ArrayList<>();
+                    coins.addAll(Arrays.asList(walletCoins));
+                    callBack.onSuccess(coins);
+                }
+            }
+        });
     }
 
 

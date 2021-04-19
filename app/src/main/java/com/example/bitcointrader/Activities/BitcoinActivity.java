@@ -111,7 +111,7 @@ public class BitcoinActivity extends AppCompatActivity implements ICoinActivity,
                 TextView actualPrice = (TextView) findViewById(R.id.actualPrice);
                 double oldPrice = Double.parseDouble(actualPrice.getText().toString());
                 actualPrice.setText(String.format(Locale.US, "%.2f", actual.getPrice()));
-                if(actual.getPrice()>oldPrice)
+                if (actual.getPrice() > oldPrice)
                     actualPrice.setTextColor(Color.GREEN);
                 else
                     actualPrice.setTextColor(Color.RED);
