@@ -161,4 +161,42 @@ public class RequestSingleton {
         };
         getRequestQueue().add(request);
     }
+
+    public void addStringRequestToRequestQueue(String url, final IRequestListener<String> listener, JSONObject body) {
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (null != response.toString())
+                            System.out.println(response.toString());
+                        listener.getResult(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (null != error.networkResponse) {
+                            listener.getResult("error");
+                        }
+                    }
+                }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return body.toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + CommonUtils.getPrefString(ctx, "token"));
+                return params;
+            }
+        };
+        getRequestQueue().add(request);
+    }
 }

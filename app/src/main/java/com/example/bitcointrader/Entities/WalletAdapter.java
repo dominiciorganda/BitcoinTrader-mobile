@@ -77,8 +77,7 @@ public class WalletAdapter extends ArrayAdapter<WalletCoin> {
         if (walletCoin.getValue() > walletCoin.getPaid()) {
             viewHolder.trendingUp.setVisibility(View.VISIBLE);
             viewHolder.trendingDown.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             viewHolder.trendingDown.setVisibility(View.VISIBLE);
             viewHolder.trendingUp.setVisibility(View.GONE);
         }

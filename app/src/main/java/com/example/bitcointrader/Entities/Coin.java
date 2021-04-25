@@ -14,6 +14,7 @@ public class Coin implements Parcelable {
     }
 
     public Coin() {
+
     }
 
     public Coin(Parcel in) {

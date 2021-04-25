@@ -10,7 +10,7 @@
         android:id="@+id/layout"
         android:layout_width="415dp"
         android:layout_height="280dp"
-        android:background="@drawable/ic_register"
+        android:background="#495AEC"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
+            android:textColor="#CDD1D3"
             android:layout_alignParentTop="true"
             android:layout_marginTop="90dp"
             android:singleLine="true"
@@ -54,6 +54,7 @@
             android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/coinlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,10 +71,11 @@
                     android:layout_height="wrap_content"
                     android:text="Coinlist"
                     android:textAlignment="center"
-                    android:textColor="#5BA4CF" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -90,10 +92,11 @@
                     android:layout_height="wrap_content"
                     android:text="Sell"
                     android:textAlignment="center"
-                    android:textColor="#5BA4CF" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -110,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="Buy"
                     android:textAlignment="center"
-                    android:textColor="#5BA4CF" />
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -128,13 +131,15 @@
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.05"
+        android:layout_marginTop="300dp"
+        android:layout_marginBottom="50dp"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_loading_screen"

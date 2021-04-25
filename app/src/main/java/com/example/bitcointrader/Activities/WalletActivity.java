@@ -2,11 +2,13 @@ package com.example.bitcointrader.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,14 +40,15 @@ public class WalletActivity extends AppCompatActivity {
     private WalletAdapter adapter;
     private TextView money;
     private TextView user;
+    private LinearLayout buy, sell, coinlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
 
-        getActualValue();
-        refreshWallet();
+//        getActualValue();
+//        refreshWallet();
         setVisibilities();
 
         new Handler().postDelayed(new Runnable() {
@@ -64,6 +67,26 @@ public class WalletActivity extends AppCompatActivity {
             }
         }, 2000);
 
+        coinlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WalletActivity.this, CoinListActivity.class));
+            }
+        });
+
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WalletActivity.this, BuyActivity.class));
+            }
+        });
+
+        sell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
@@ -97,11 +120,11 @@ public class WalletActivity extends AppCompatActivity {
                             adapter.notifyDataSetChanged();
                         walletCoins.clear();
                         walletCoins.addAll(wallet);
-                        System.out.println(walletCoins);
+//                        System.out.println(walletCoins);
                         double sum = 0;
                         for (WalletCoin walletCoin : walletCoins)
                             sum += walletCoin.getValue();
-                        money.setText(String.format(Locale.US, "%.2f", sum) + " USD");
+                        money.setText(String.format(Locale.US, "%.2f", sum) + " $");
                     }
                 });
             }
@@ -116,12 +139,24 @@ public class WalletActivity extends AppCompatActivity {
         timer.purge();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getActualValue();
+        refreshWallet();
+
+
+    }
+
     public void setVisibilities() {
         loadingScreen = findViewById(R.id.fragment_loading_screen);
         setLoadingScreen();
         listView = (ListView) findViewById(R.id.listview);
         money = findViewById(R.id.money);
         user = findViewById(R.id.user);
+        coinlist = findViewById(R.id.coinlist);
+        buy = findViewById(R.id.buy);
+        sell = findViewById(R.id.sell);
         listView.setVisibility(View.GONE);
         layout = findViewById(R.id.layout);
         layout.setVisibility(View.GONE);

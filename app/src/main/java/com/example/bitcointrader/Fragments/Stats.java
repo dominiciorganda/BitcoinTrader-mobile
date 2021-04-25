@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bitcointrader.Activities.PredictionActivity;
@@ -39,7 +40,7 @@ public class Stats extends Fragment {
 
     // TODO: Rename and change types of parameters
     private Coin maxCoin, anualMax, anualMin, actualCoin;
-    private Button prediction;
+    private LinearLayout prediction;
     private String url;
 
     public Stats() {

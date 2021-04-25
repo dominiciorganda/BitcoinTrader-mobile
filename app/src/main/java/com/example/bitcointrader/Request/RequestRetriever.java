@@ -2,8 +2,6 @@ package com.example.bitcointrader.Request;
 
 import android.content.Context;
 
-import androidx.core.content.ContextCompat;
-
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.CommonUtils;
 import com.example.bitcointrader.Entities.User;
@@ -67,6 +65,18 @@ public class RequestRetriever {
 
     public void register(String url, Context context, final IRequestCallBack callBack, JSONObject body) {
         RequestSingleton.getInstance(context).addRegisterToRequestQueue(url, new IRequestListener<String>() {
+            @Override
+            public void getResult(String object) {
+                System.out.println(object);
+                if (!object.isEmpty()) {
+                    callBack.onSuccess(object);
+                }
+            }
+        }, body);
+    }
+
+    public void buy(String url, Context context, final IRequestCallBack callBack, JSONObject body) {
+        RequestSingleton.getInstance(context).addStringRequestToRequestQueue(url, new IRequestListener<String>() {
             @Override
             public void getResult(String object) {
                 System.out.println(object);
