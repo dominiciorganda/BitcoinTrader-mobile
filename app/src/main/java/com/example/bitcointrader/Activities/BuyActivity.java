@@ -84,9 +84,11 @@ public class BuyActivity extends AppCompatActivity {
                 if (!usdAmount.hasFocus()) {
                     coinAmount.setTextColor(Color.BLACK);
                     if (charSequence.length() > 0) {
-                        double price = Double.parseDouble(coinAmount.getText().toString());
-                        price *= coin.getPrice();
-                        usdAmount.setText(String.format(Locale.US, "%.2f", price));
+                        if (!coinAmount.getText().toString().equals(".")) {
+                            double price = Double.parseDouble(coinAmount.getText().toString());
+                            price *= coin.getPrice();
+                            usdAmount.setText(String.format(Locale.US, "%.2f", price));
+                        }
                     } else
                         usdAmount.setText("0");
                 }
@@ -109,9 +111,11 @@ public class BuyActivity extends AppCompatActivity {
                 if (!coinAmount.hasFocus()) {
 
                     if (charSequence.length() > 0) {
-                        double price = Double.parseDouble(usdAmount.getText().toString());
-                        price /= coin.getPrice();
-                        coinAmount.setText(String.format(Locale.US, "%.2f", price));
+                        if(!usdAmount.getText().toString().equals(".")){
+                            double price = Double.parseDouble(usdAmount.getText().toString());
+                            price /= coin.getPrice();
+                            coinAmount.setText(String.format(Locale.US, "%.2f", price));
+                        }
                     } else
                         coinAmount.setText("0");
                 }

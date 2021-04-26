@@ -71,7 +71,7 @@ public class WalletAdapter extends ArrayAdapter<WalletCoin> {
         if (walletCoin.getAmount() == (int) walletCoin.getAmount())
             viewHolder.amount.setText(String.format("%d", (int) walletCoin.getAmount()) + " " + CoinTypes.getShortcut(walletCoin.getCoinName()));
         else
-            viewHolder.amount.setText("" + walletCoin.getAmount() + " " + CoinTypes.getShortcut(walletCoin.getCoinName()));
+            viewHolder.amount.setText(String.format(Locale.US, "%.3f", walletCoin.getAmount()) + " " + CoinTypes.getShortcut(walletCoin.getCoinName()));
         viewHolder.value.setText(String.format(Locale.US, "%.2f", walletCoin.getValue()) + " USD");
 
         if (walletCoin.getValue() > walletCoin.getPaid()) {
