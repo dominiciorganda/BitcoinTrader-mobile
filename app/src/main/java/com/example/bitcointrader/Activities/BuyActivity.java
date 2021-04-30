@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.CoinTypes;
@@ -111,7 +112,7 @@ public class BuyActivity extends AppCompatActivity {
                 if (!coinAmount.hasFocus()) {
 
                     if (charSequence.length() > 0) {
-                        if(!usdAmount.getText().toString().equals(".")){
+                        if (!usdAmount.getText().toString().equals(".")) {
                             double price = Double.parseDouble(usdAmount.getText().toString());
                             price /= coin.getPrice();
                             coinAmount.setText(String.format(Locale.US, "%.2f", price));
@@ -171,16 +172,23 @@ public class BuyActivity extends AppCompatActivity {
                                 body.put("amount", coinAmount.getText().toString());
                                 body.put("actualPrice", coin.getPrice());
                                 body.put("paidPrice", usdAmount.getText().toString());
+                                body.put("type", "BUY");
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                            requestRetriever.buy(Urls.BUY, getApplicationContext(), new IRequestCallBack() {
+                            requestRetriever.buy(Urls.TRANSACTION, getApplicationContext(), new IRequestCallBack() {
                                 @Override
                                 public void onSuccess(Object response) {
-                                    System.out.println(response.toString());
+//                                    System.out.println(response.toString());
+                                    if (response.toString().equals("Transaction added"))
+                                        Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " buyed", Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+
                                 }
+
                             }, body);
                         }
                     }

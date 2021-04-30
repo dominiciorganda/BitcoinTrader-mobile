@@ -15,7 +15,7 @@ public class Urls {
     public static final String LOGIN = AUTH + "/login";
     public static final String REGISTER = AUTH + "/register";
     public static final String WALLET = ROOT + "/wallet";
-    public static final String BUY = WALLET + "/buy";
+    public static final String TRANSACTION = WALLET + "/makeTransaction";
 
 
 }
