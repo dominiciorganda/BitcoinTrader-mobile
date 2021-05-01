@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -84,7 +85,9 @@ public class WalletActivity extends AppCompatActivity {
         sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(WalletActivity.this, SellActivity.class);
+                intent.putParcelableArrayListExtra("walletCoins", (ArrayList<? extends Parcelable>) walletCoins);
+                startActivity(intent);
             }
         });
 

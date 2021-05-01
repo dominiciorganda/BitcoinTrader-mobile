@@ -75,7 +75,7 @@ public class RequestRetriever {
         }, body);
     }
 
-    public void buy(String url, Context context, final IRequestCallBack callBack, JSONObject body) {
+    public void transaction(String url, Context context, final IRequestCallBack callBack, JSONObject body) {
         RequestSingleton.getInstance(context).addStringRequestToRequestQueue(url, new IRequestListener<String>() {
             @Override
             public void getResult(String object) {

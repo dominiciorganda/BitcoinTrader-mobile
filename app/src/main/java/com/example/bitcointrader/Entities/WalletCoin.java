@@ -1,6 +1,9 @@
 package com.example.bitcointrader.Entities;
 
-public class WalletCoin {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WalletCoin implements Parcelable {
     private CoinTypes coinName;
     private double amount;
     private double actualPrice;
@@ -16,6 +19,11 @@ public class WalletCoin {
     }
 
     public WalletCoin() {
+    }
+
+    public WalletCoin(Parcel in) {
+        this.setCoinName((CoinTypes) in.readSerializable());
+        this.setAmount(in.readDouble());
     }
 
     public CoinTypes getCoinName() {
@@ -68,4 +76,27 @@ public class WalletCoin {
                 ", paid=" + paid +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeSerializable(this.coinName);
+        parcel.writeDouble(this.amount);
+    }
+
+    public static final Creator<WalletCoin> CREATOR = new Creator<WalletCoin>() {
+        @Override
+        public WalletCoin createFromParcel(Parcel in) {
+            return new WalletCoin(in);
+        }
+
+        @Override
+        public WalletCoin[] newArray(int size) {
+            return new WalletCoin[size];
+        }
+    };
 }

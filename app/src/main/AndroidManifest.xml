@@ -13,20 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.BuyActivity"></activity>
+        <activity android:name=".Activities.SellActivity"></activity>
+        <activity android:name=".Activities.BuyActivity" />
         <activity android:name=".Activities.ChooseCoinActivity" />
-        <activity android:name=".Activities.WalletActivity">
-
-        </activity>
+        <activity android:name=".Activities.WalletActivity"></activity>
         <activity android:name=".Activities.Intro" />
         <activity android:name=".Activities.CoinActivity" />
         <activity android:name=".Activities.PredictionActivity" />
         <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.LoginActivity"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.DogecoinActivity" />
         <activity android:name=".Activities.DashActivity" />
         <activity android:name=".Activities.LitecoinActivity" />

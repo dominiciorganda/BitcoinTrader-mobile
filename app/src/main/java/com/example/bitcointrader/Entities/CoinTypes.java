@@ -106,5 +106,30 @@ public enum CoinTypes {
         }
     }
 
+    public static CoinTypes getCoinType(String value) {
+        switch (value) {
+            case "BITCOIN":
+                return BITCOIN;
+            case "DASH":
+                return DASH;
+            case "ELROND":
+                return ELROND;
+            case "DOGECOIN":
+                return DOGECOIN;
+            case "ETHEREUM":
+                return ETHEREUM;
+            case "FILECOIN":
+                return FILECOIN;
+            case "LITECOIN":
+                return LITECOIN;
+            case "BINANCECOIN":
+                return BINANCECOIN;
+            case "BITCOINCASH":
+                return BITCOINCASH;
+            default:
+                return null;
+        }
+    }
+
 }
 
