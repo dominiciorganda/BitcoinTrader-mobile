@@ -10,7 +10,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:background="@drawable/btc"
-        android:layout_marginLeft="3dp"/>
+        android:layout_marginLeft="3dp" />
 
     <TextView
         android:id="@+id/name"
@@ -31,8 +31,7 @@
         android:layout_marginStart="7dp"
         android:layout_marginTop="42dp"
         android:layout_toEndOf="@+id/logo"
-        android:textSize="15dip"
-         />
+        android:textSize="15dip" />
 
     <TextView
         android:id="@+id/amount"
@@ -64,7 +63,7 @@
         android:layout_marginBottom="-31dp"
         android:layout_toStartOf="@+id/value"
         android:background="@drawable/baseline_trending_up_24"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/trendingdown"
@@ -75,8 +74,7 @@
         android:layout_marginBottom="-31dp"
         android:layout_toStartOf="@+id/value"
         android:background="@drawable/baseline_trending_down_24"
-        android:visibility="invisible"/>
-
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

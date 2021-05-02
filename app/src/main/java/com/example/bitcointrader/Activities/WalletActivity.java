@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.bitcointrader.Entities.Coin;
+import com.example.bitcointrader.Entities.CoinTypes;
 import com.example.bitcointrader.Entities.CommonUtils;
 import com.example.bitcointrader.Entities.WalletAdapter;
 import com.example.bitcointrader.Entities.WalletCoin;
@@ -87,6 +89,17 @@ public class WalletActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(WalletActivity.this, SellActivity.class);
                 intent.putParcelableArrayListExtra("walletCoins", (ArrayList<? extends Parcelable>) walletCoins);
+                startActivity(intent);
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                WalletCoin walletCoin = (WalletCoin) adapterView.getItemAtPosition(i);
+                CoinTypes coinTypes = walletCoin.getCoinName();
+                Intent intent = new Intent(WalletActivity.this, TransactionActivity.class);
+                intent.putExtra("coinName", coinTypes);
                 startActivity(intent);
             }
         });

@@ -16,7 +16,7 @@
         android:text="Choose Coin"
         android:textStyle="bold"
         android:textSize="40dp"
-        android:textColor="#495AEC"/>
+        android:textColor="#495AEC" />
 
     <ListView
         android:id="@+id/listviewCoins"

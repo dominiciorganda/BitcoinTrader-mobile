@@ -13,10 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.SellActivity"></activity>
+        <activity android:name=".Activities.TransactionActivity"></activity>
+        <activity android:name=".Activities.SellActivity" />
         <activity android:name=".Activities.BuyActivity" />
         <activity android:name=".Activities.ChooseCoinActivity" />
-        <activity android:name=".Activities.WalletActivity"></activity>
+        <activity android:name=".Activities.WalletActivity" />
         <activity android:name=".Activities.Intro" />
         <activity android:name=".Activities.CoinActivity" />
         <activity android:name=".Activities.PredictionActivity" />

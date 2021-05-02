@@ -50,8 +50,7 @@ public class ChooseCoinActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 if (getIntent().getStringArrayListExtra("coins") == null) {
                     intent.putExtra("coin", CoinTypes.values()[position]);
-                }
-                else {
+                } else {
                     intent.putExtra("coin", types[position]);
                 }
                 setResult(RESULT_OK, intent);
