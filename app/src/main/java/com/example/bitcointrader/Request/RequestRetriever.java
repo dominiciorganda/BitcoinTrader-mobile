@@ -57,6 +57,7 @@ public class RequestRetriever {
                         User user = gson.fromJson(object, User.class);
                         CommonUtils.putPrefString(context, "token", user.getToken());
                         CommonUtils.putPrefString(context, "username", user.getUsername());
+                        CommonUtils.putPrefString(context, "money", user.getMoney());
                         callBack.onSuccess("succes");
                     }
                 }
@@ -86,6 +87,18 @@ public class RequestRetriever {
                 }
             }
         }, body);
+    }
+
+    public void getMoney(String url, Context context, final IRequestCallBack callBack) {
+        RequestSingleton.getInstance(context).addGetStringRequestToRequestQueue(url, new IRequestListener<String>() {
+            @Override
+            public void getResult(String object) {
+                if (!object.isEmpty()) {
+                    CommonUtils.putPrefString(context, "money", object);
+                    callBack.onSuccess("succes");
+                } else callBack.onSuccess("error");
+            }
+        });
     }
 
     public void getWallet(String url, Context context, final IRequestCallBack callBack) {

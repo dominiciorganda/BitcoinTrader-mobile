@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.bitcointrader.Entities.CommonUtils;
 import com.example.bitcointrader.R;
 
 public class Intro extends AppCompatActivity {

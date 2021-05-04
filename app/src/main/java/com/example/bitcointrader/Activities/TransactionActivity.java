@@ -2,6 +2,7 @@ package com.example.bitcointrader.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.example.bitcointrader.util.Urls;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class TransactionActivity extends AppCompatActivity {
     private View loadingScreen;
     private RelativeLayout relativeLayout;
     private Loading loading;
+    private RelativeLayout coin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +52,13 @@ public class TransactionActivity extends AppCompatActivity {
         getTransactions();
 
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 for (Transaction transaction : transactions)
                     transaction.setTransactionDate(getDate(transaction.getTransactionDate()));
 //                System.out.println(transactions);
+                Collections.reverse(transactions);
                 loading.disableLoadingScreen();
                 listView.setVisibility(View.VISIBLE);
                 relativeLayout.setVisibility(View.VISIBLE);
@@ -64,6 +67,15 @@ public class TransactionActivity extends AppCompatActivity {
 ////                System.out.println(walletCoins.size());
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+
+                coin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(TransactionActivity.this, CoinActivity.class);
+                        intent.putExtra("url", CoinTypes.getCoinUrl(coinTypes));
+                        startActivity(intent);
+                    }
+                });
 
             }
         }, 2000);
@@ -80,8 +92,8 @@ public class TransactionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         dateFormat.applyPattern("MMM dd, h:mm a");
-        System.out.println(input);
-        System.out.println(dateFormat.format(date));
+//        System.out.println(input);
+//        System.out.println(dateFormat.format(date));
         return dateFormat.format(date);
     }
 
@@ -105,6 +117,7 @@ public class TransactionActivity extends AppCompatActivity {
         coinImage = findViewById(R.id.transacactionCoinImage);
         coinName = findViewById(R.id.transactionCoinName);
         listView = findViewById(R.id.transactionlistview);
+        coin = findViewById(R.id.coin);
         coinImage.setBackgroundResource(CoinTypes.getDrawable(coinTypes));
         coinName.setText(CoinTypes.getName(coinTypes));
         relativeLayout = findViewById(R.id.layout);

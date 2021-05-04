@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.CoinTypes;
+import com.example.bitcointrader.Entities.CommonUtils;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
 import com.example.bitcointrader.Request.RequestRetriever;
@@ -163,36 +164,52 @@ public class BuyActivity extends AppCompatActivity {
                             System.out.println(coin.getPrice());
                             System.out.println(usdAmount.getText().toString());
 
-                            JSONObject body = new JSONObject();
-                            try {
-                                body.put("coin", coinType.toString());
-                                body.put("amount", coinAmount.getText().toString());
-                                body.put("actualPrice", coin.getPrice());
-                                body.put("paidPrice", usdAmount.getText().toString());
-                                body.put("type", "BUY");
+                            if (validateBuy()) {
+                                JSONObject body = new JSONObject();
+                                try {
+                                    body.put("coin", coinType.toString());
+                                    body.put("amount", coinAmount.getText().toString());
+                                    body.put("actualPrice", coin.getPrice());
+                                    body.put("paidPrice", usdAmount.getText().toString());
+                                    body.put("type", "BUY");
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            requestRetriever.transaction(Urls.TRANSACTION, getApplicationContext(), new IRequestCallBack() {
-                                @Override
-                                public void onSuccess(Object response) {
-//                                    System.out.println(response.toString());
-                                    if (response.toString().equals("Transaction added"))
-                                        Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " buyed", Toast.LENGTH_SHORT).show();
-                                    else
-                                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
 
-                            }, body);
+                                requestRetriever.transaction(Urls.TRANSACTION, getApplicationContext(), new IRequestCallBack() {
+                                    @Override
+                                    public void onSuccess(Object response) {
+//                                    System.out.println(response.toString());
+                                        if (response.toString().equals("Transaction added")) {
+                                            Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " buyed", Toast.LENGTH_SHORT).show();
+
+                                            requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
+                                                @Override
+                                                public void onSuccess(Object coin) {
+
+                                                }
+                                            });
+                                        } else
+                                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }, body);
+                            } else
+                                Toast.makeText(getApplicationContext(), "Insufficient funds! Please add money!", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
 
             }
         }
+    }
+
+    public boolean validateBuy() {
+        double amount = Double.parseDouble(usdAmount.getText().toString());
+        double money = Double.parseDouble(CommonUtils.getPrefString(getApplicationContext(), "money"));
+        return money >= amount;
     }
 
 

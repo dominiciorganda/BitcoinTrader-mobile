@@ -164,7 +164,7 @@
             android:textAlignment="center"
             android:textColor="#495AEC"
             android:textSize="25dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
 

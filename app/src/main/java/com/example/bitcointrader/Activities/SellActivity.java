@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.CoinTypes;
+import com.example.bitcointrader.Entities.CommonUtils;
 import com.example.bitcointrader.Entities.WalletCoin;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
@@ -184,7 +185,13 @@ public class SellActivity extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " sold", Toast.LENGTH_SHORT).show();
                                             actualWalletCoin.setAmount(actualWalletCoin.getAmount() - sellAmount);
                                             setAmountLayout();
-//                                            System.out.println(coins);
+
+                                            requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
+                                                @Override
+                                                public void onSuccess(Object coin) {
+//                                                    System.out.println(CommonUtils.getPrefString(getApplicationContext(),"money"));
+                                                }
+                                            });
                                         } else
                                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
 

@@ -1,7 +1,9 @@
 package com.example.bitcointrader.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,7 +45,9 @@ public class WalletActivity extends AppCompatActivity {
     private WalletAdapter adapter;
     private TextView money;
     private TextView user;
-    private LinearLayout buy, sell, coinlist;
+    private LinearLayout buy, sell, coinlist, topup;
+    private AlertDialog dialog;
+    private TextView totalFunds, walletFunds, accountFunds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,13 @@ public class WalletActivity extends AppCompatActivity {
             }
         });
 
+        topup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WalletActivity.this, CardActivity.class));
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -101,6 +112,42 @@ public class WalletActivity extends AppCompatActivity {
                 Intent intent = new Intent(WalletActivity.this, TransactionActivity.class);
                 intent.putExtra("coinName", coinTypes);
                 startActivity(intent);
+            }
+        });
+
+        money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(WalletActivity.this);
+                builder.setTitle("@" + CommonUtils.getPrefString(getApplicationContext(), "username") + " funds");
+
+                // set the custom layout
+                final View customLayout = getLayoutInflater().inflate(R.layout.layout_walletmoney_popup, null);
+                builder.setView(customLayout);
+                accountFunds = customLayout.findViewById(R.id.usdFunds);
+                totalFunds = customLayout.findViewById(R.id.totalFunds);
+                walletFunds = customLayout.findViewById(R.id.walletFunds);
+
+                double sum = 0;
+                for (WalletCoin walletCoin : walletCoins)
+                    sum += walletCoin.getValue();
+
+                walletFunds.setText("$" + String.format(Locale.US, "%.2f", sum));
+                double funds = Double.parseDouble(CommonUtils.getPrefString(getApplicationContext(), "money"));
+                sum += funds;
+
+                totalFunds.setText("$" + String.format(Locale.US, "%.2f", sum));
+                accountFunds.setText("$" + funds);
+
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                dialog = builder.create();
+                dialog.show();
             }
         });
 
@@ -140,6 +187,8 @@ public class WalletActivity extends AppCompatActivity {
                         double sum = 0;
                         for (WalletCoin walletCoin : walletCoins)
                             sum += walletCoin.getValue();
+                        double funds = Double.parseDouble(CommonUtils.getPrefString(getApplicationContext(), "money"));
+                        sum += funds;
                         money.setText(String.format(Locale.US, "%.2f", sum) + " $");
                     }
                 });
@@ -173,6 +222,7 @@ public class WalletActivity extends AppCompatActivity {
         coinlist = findViewById(R.id.coinlist);
         buy = findViewById(R.id.buy);
         sell = findViewById(R.id.sell);
+        topup = findViewById(R.id.topup);
         listView.setVisibility(View.GONE);
         layout = findViewById(R.id.layout);
         layout.setVisibility(View.GONE);
