@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.bitcointrader.Entities.ChartType;
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Fragments.Chart;
 import com.example.bitcointrader.Fragments.ChartDays;
@@ -164,6 +165,7 @@ public class DashActivity extends AppCompatActivity implements ICoinActivity, IF
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("CHART_COINS", chartData);
         bundle.putString("URL", Urls.DASH);
+        bundle.putSerializable("CHART_TYPE", ChartType.LINEAR);
         Chart chart = new Chart();
         chart.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_chart, chart).commit();
@@ -206,5 +208,31 @@ public class DashActivity extends AppCompatActivity implements ICoinActivity, IF
                 drawChart();
             }
         });
+    }
+
+    @Override
+    public void communicate(String data, ChartType chartType) {
+        requestRetriever.getCoinList(Urls.DASH + "/getLastX/" + data, getApplicationContext(), new IRequestCallBack<List<Coin>>() {
+            @Override
+            public void onSuccess(List<Coin> coins) {
+                chartCoins = new ArrayList<>();
+                chartCoins.addAll(coins);
+                drawChart(chartType);
+            }
+        });
+    }
+
+    public void drawChart(ChartType chartType) {
+        ArrayList<Coin> chartData = new ArrayList<Coin>();
+        chartData.addAll(chartCoins);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("CHART_COINS", chartData);
+        bundle.putString("URL", Urls.DASH);
+        bundle.putSerializable("CHART_TYPE", chartType);
+        Chart chart = new Chart();
+        chart.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_chart, chart).commit();
+
     }
 }

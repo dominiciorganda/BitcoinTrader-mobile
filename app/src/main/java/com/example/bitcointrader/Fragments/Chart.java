@@ -10,19 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bitcointrader.Entities.ChartType;
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.Popup;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.util.CoinUrls;
 import com.example.bitcointrader.util.Urls;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +42,12 @@ public class Chart extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CHART_COINS = "coins";
     private static final String URL = "URL";
+    private static final String CHART_TYPE = "charttype";
 
     // TODO: Rename and change types of parameters
     private ArrayList<Coin> chartCoins;
     private String url;
+    private ChartType chartType;
 
 
     public Chart() {
@@ -76,6 +83,7 @@ public class Chart extends Fragment {
         if (getArguments() != null) {
             chartCoins = getArguments().getParcelableArrayList("CHART_COINS");
             url = getArguments().getString("URL");
+            chartType = (ChartType) getArguments().getSerializable("CHART_TYPE");
         } else
             System.out.println("ok");
 
@@ -103,7 +111,10 @@ public class Chart extends Fragment {
         for (Coin data : chartCoins) {
             i++;
 
-            entries.add(new Entry(i, (float) data.getPrice()));
+            if (chartType == ChartType.LINEAR)
+                entries.add(new Entry(i, (float) data.getPrice()));
+            if (chartType == ChartType.LOGARITMIC)
+                entries.add(new Entry(i, scaleCbr(data.getPrice())));
         }
 
 
@@ -167,8 +178,26 @@ public class Chart extends Fragment {
         chart.getLegend().setEnabled(false);
         chart.invalidate(); // refresh
 
+        IMarker marker;
+        
+        if (chartType == ChartType.LOGARITMIC) {
+            chart.getAxisLeft().setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    DecimalFormat mFormat;
+                    mFormat = new DecimalFormat("##.###");
+                    return mFormat.format(unScaleCbr(value));
+                }
 
-        IMarker marker = new Popup(getContext(), R.layout.popup, chartCoins);
+            });
+            chart.getAxisLeft().setAxisMinimum(scaleCbr(1));
+            chart.getAxisLeft().setAxisMaximum(scaleCbr(100000));
+            chart.getAxisLeft().setLabelCount(6, true);
+            marker = new Popup(getContext(), R.layout.popup, chartCoins, ChartType.LOGARITMIC);
+        } else
+            marker = new Popup(getContext(), R.layout.popup, chartCoins, ChartType.LINEAR);
+
+
         chart.setMarker(marker);
 
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -187,5 +216,14 @@ public class Chart extends Fragment {
 
             }
         });
+    }
+
+    private float scaleCbr(double cbr) {
+        return (float) (Math.log10(cbr));
+    }
+
+    private float unScaleCbr(double cbr) {
+        double calcVal = Math.pow(10, cbr);
+        return (float) (calcVal);
     }
 }

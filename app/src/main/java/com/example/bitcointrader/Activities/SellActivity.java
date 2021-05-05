@@ -75,7 +75,8 @@ public class SellActivity extends AppCompatActivity {
             public void onClick(View view) {
                 List<String> coinTypes = new ArrayList<>();
                 for (WalletCoin walletCoin : coins)
-                    coinTypes.add(walletCoin.getCoinName().toString());
+                    if (walletCoin.getAmount() > 0)
+                        coinTypes.add(walletCoin.getCoinName().toString());
                 Intent intent = new Intent(SellActivity.this, ChooseCoinActivity.class);
                 intent.putStringArrayListExtra("coins", (ArrayList<String>) coinTypes);
                 startActivityForResult(intent, 1);

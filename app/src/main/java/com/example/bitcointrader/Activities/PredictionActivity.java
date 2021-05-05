@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import com.example.bitcointrader.Entities.ChartType;
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.Popup;
 import com.example.bitcointrader.Fragments.Loading;
@@ -155,7 +156,7 @@ public class PredictionActivity extends AppCompatActivity {
         chart.invalidate(); // refresh
 
 
-        IMarker marker = new Popup(getApplicationContext(), R.layout.popup, chartCoins);
+        IMarker marker = new Popup(getApplicationContext(), R.layout.popup, chartCoins, ChartType.LINEAR);
         chart.setMarker(marker);
 
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {

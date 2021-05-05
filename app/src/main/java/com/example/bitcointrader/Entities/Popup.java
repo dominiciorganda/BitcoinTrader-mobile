@@ -18,12 +18,14 @@ public class Popup extends MarkerView {
     private TextView tvContent;
 
     private List<Coin> chartCoins = new ArrayList<>();
+    private ChartType chartType;
 
-    public Popup(Context context, int layoutResource, List<Coin> chartCoins) {
+    public Popup(Context context, int layoutResource, List<Coin> chartCoins, ChartType chartType) {
         super(context, layoutResource);
         // this markerview only displays a textview
         tvContent = (TextView) findViewById(R.id.tvContent);
         this.chartCoins.addAll(chartCoins);
+        this.chartType = chartType;
     }
 
 
@@ -31,9 +33,16 @@ public class Popup extends MarkerView {
 // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        int value = (int) e.getY();
-        String date = chartCoins.get((int) e.getX() - 1).getDate().substring(5).replace("-", ".");
-        tvContent.setText("" + value + "\n" + date); // set the entry-value as the display text
+        if (chartType == ChartType.LINEAR) {
+            int value = (int) e.getY();
+            String date = chartCoins.get((int) e.getX() - 1).getDate().substring(5).replace("-", ".");
+            tvContent.setText("" + value + "\n" + date);
+        } // set the entry-value as the display text}
+        if (chartType == ChartType.LOGARITMIC) {
+            float value = e.getY();
+            String date = chartCoins.get((int) e.getX() - 1).getDate().substring(5).replace("-", ".");
+            tvContent.setText("" + (int) unScaleCbr(value) + "\n" + date);
+        }
         super.refreshContent(e, highlight);
     }
 
@@ -48,5 +57,14 @@ public class Popup extends MarkerView {
         }
 
         return mOffset;
+    }
+
+    private float scaleCbr(double cbr) {
+        return (float) (Math.log10(cbr));
+    }
+
+    private float unScaleCbr(double cbr) {
+        double calcVal = Math.pow(10, cbr);
+        return (float) (calcVal);
     }
 }

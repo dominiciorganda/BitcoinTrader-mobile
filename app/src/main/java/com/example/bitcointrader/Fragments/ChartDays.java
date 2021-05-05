@@ -9,8 +9,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 
+import com.example.bitcointrader.Entities.ChartType;
 import com.example.bitcointrader.R;
 
 /**
@@ -27,6 +30,7 @@ public class ChartDays extends Fragment {
     // TODO: Rename and change types of parameters
     private EditText daysNumber;
     private IFragmentToActivity callBack;
+    private Switch typeSwitch;
 
     @Override
     public void onAttach(Context context) {
@@ -71,6 +75,7 @@ public class ChartDays extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chart_days, container, false);
         daysNumber = view.findViewById(R.id.numberDays);
+        typeSwitch = view.findViewById(R.id.type);
         return view;
     }
 
@@ -80,26 +85,42 @@ public class ChartDays extends Fragment {
         super.onDetach();
     }
 
+    private void sendData(String data, ChartType chartType) {
+        callBack.communicate(data, chartType);
+    }
+
     private void sendData(String data) {
         callBack.communicate(data);
-
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (daysNumber != null) {
+        if (daysNumber != null && typeSwitch != null) {
             daysNumber.setOnKeyListener(new View.OnKeyListener() {
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     // If the event is a key-down event on the "enter" button
                     if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                             (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         // Perform action on key press
-                        sendData(daysNumber.getText().toString());
+                        if (typeSwitch.isChecked())
+                            sendData(daysNumber.getText().toString(), ChartType.LOGARITMIC);
+                        else
+                            sendData(daysNumber.getText().toString(), ChartType.LINEAR);
                         return true;
                     }
                     return false;
+                }
+            });
+
+            typeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b)
+                        sendData(daysNumber.getText().toString(), ChartType.LOGARITMIC);
+                    else
+                        sendData(daysNumber.getText().toString(), ChartType.LINEAR);
                 }
             });
 
