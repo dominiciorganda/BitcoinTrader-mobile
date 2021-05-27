@@ -56,38 +56,58 @@ public class CardActivity extends AppCompatActivity {
             public void onClick(Card card) {
                 //Your code here!! use card.getXXX() for get any card property
                 //for instance card.getName();
-                String price = amount.getText().toString().replace("$", "");
-                JSONObject body = new JSONObject();
-                try {
-                    body.put("amount", price);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(cardForm.getContext(), R.style.PreferenceDialogLight);
 
-                requestRetriever.transaction(Urls.ADDFUNDS, getApplicationContext(), new IRequestCallBack() {
+                builder.setTitle("Confirm Payment");
+                builder.setMessage("Add  " + amount.getText().toString() + "$ to wallet?");
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onSuccess(Object response) {
-//                                    System.out.println(response.toString());
-                        if (response.toString().equals("Transaction added")) {
-                            Toast.makeText(getApplicationContext(), amount.getText().toString() + " added to wallet", Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                            requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
-                                @Override
-                                public void onSuccess(Object response) {
-
-                                }
-                            });
-
-                        } else
-                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
+                });
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String price = amount.getText().toString().replace("$", "");
+                        JSONObject body = new JSONObject();
+                        try {
+                            body.put("amount", price);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                }, body);
+                        requestRetriever.transaction(Urls.ADDFUNDS, getApplicationContext(), new IRequestCallBack() {
+                            @Override
+                            public void onSuccess(Object response) {
+//                                    System.out.println(response.toString());
+                                if (response.toString().equals("Transaction added")) {
+                                    Toast.makeText(getApplicationContext(), amount.getText().toString() + " added to wallet", Toast.LENGTH_SHORT).show();
+
+                                    requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
+                                        @Override
+                                        public void onSuccess(Object response) {
+
+                                        }
+                                    });
+
+                                } else
+                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }, body);
+                    }
+                });
+
+                dialog = builder.create();
+                dialog.show();
+
 
             }
         });
         showPopup();
     }
+
 
     public void showPopup() {
 

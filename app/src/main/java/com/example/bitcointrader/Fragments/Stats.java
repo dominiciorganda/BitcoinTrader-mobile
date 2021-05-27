@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bitcointrader.Activities.PredictionActivity;
+import com.example.bitcointrader.Activities.StatisticPredictionActivity;
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.util.CoinUrls;

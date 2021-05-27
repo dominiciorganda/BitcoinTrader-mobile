@@ -1,7 +1,9 @@
 package com.example.bitcointrader.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ public class SellActivity extends AppCompatActivity {
     private TextView sellUsdAmount;
     private LinearLayout sellButton;
     private LinearLayout availableLayout;
+    private AlertDialog dialog;
 
 
     @Override
@@ -166,39 +169,59 @@ public class SellActivity extends AppCompatActivity {
 
 
                             if (actualWalletCoin.getAmount() >= sellAmount) {
-                                JSONObject body = new JSONObject();
-                                try {
-                                    body.put("coin", coinType.toString());
-                                    body.put("amount", sellCoinAmount.getText().toString());
-                                    body.put("actualPrice", coin.getPrice());
-                                    String paidPrice = sellUsdAmount.getText().toString().substring(0, sellUsdAmount.getText().toString().length() - 4);
-                                    body.put("paidPrice", paidPrice);
-                                    body.put("type", "SELL");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.PreferenceDialogLight);
 
-                                requestRetriever.transaction(Urls.TRANSACTION, getApplicationContext(), new IRequestCallBack() {
+                                builder.setTitle("Confirm Sell Payment");
+                                builder.setMessage("Sell  " + sellCoinAmount.getText().toString() + " " + CoinTypes.getShortcut(coinType) + "?");
+                                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onSuccess(Object response) {
-//                                    System.out.println(response.toString());
-                                        if (response.toString().equals("Transaction added")) {
-                                            Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " sold", Toast.LENGTH_SHORT).show();
-                                            actualWalletCoin.setAmount(actualWalletCoin.getAmount() - sellAmount);
-                                            setAmountLayout();
-
-                                            requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
-                                                @Override
-                                                public void onSuccess(Object coin) {
-//                                                    System.out.println(CommonUtils.getPrefString(getApplicationContext(),"money"));
-                                                }
-                                            });
-                                        } else
-                                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    public void onClick(DialogInterface dialogInterface, int i) {
 
                                     }
+                                });
+                                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                                }, body);
+                                        JSONObject body = new JSONObject();
+                                        try {
+                                            body.put("coin", coinType.toString());
+                                            body.put("amount", sellCoinAmount.getText().toString());
+                                            body.put("actualPrice", coin.getPrice());
+                                            String paidPrice = sellUsdAmount.getText().toString().substring(0, sellUsdAmount.getText().toString().length() - 4);
+                                            body.put("paidPrice", paidPrice);
+                                            body.put("type", "SELL");
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        requestRetriever.transaction(Urls.TRANSACTION, getApplicationContext(), new IRequestCallBack() {
+                                            @Override
+                                            public void onSuccess(Object response) {
+//                                    System.out.println(response.toString());
+                                                if (response.toString().equals("Transaction added")) {
+                                                    Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " sold", Toast.LENGTH_SHORT).show();
+                                                    actualWalletCoin.setAmount(actualWalletCoin.getAmount() - sellAmount);
+                                                    setAmountLayout();
+
+                                                    requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
+                                                        @Override
+                                                        public void onSuccess(Object coin) {
+//                                                    System.out.println(CommonUtils.getPrefString(getApplicationContext(),"money"));
+                                                        }
+                                                    });
+                                                } else
+                                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+
+                                            }
+
+                                        }, body);
+                                    }
+                                });
+
+                                dialog = builder.create();
+                                dialog.show();
+
                             } else
                                 Toast.makeText(getApplicationContext(), "Selected amount is too large!", Toast.LENGTH_LONG).show();
                         }

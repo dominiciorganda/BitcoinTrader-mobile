@@ -1,7 +1,9 @@
 package com.example.bitcointrader.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class BuyActivity extends AppCompatActivity {
     private EditText usdAmount;
     private TextView buyShortcut;
     private LinearLayout button;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,37 +168,56 @@ public class BuyActivity extends AppCompatActivity {
                             System.out.println(usdAmount.getText().toString());
 
                             if (validateBuy()) {
-                                JSONObject body = new JSONObject();
-                                try {
-                                    body.put("coin", coinType.toString());
-                                    body.put("amount", coinAmount.getText().toString());
-                                    body.put("actualPrice", coin.getPrice());
-                                    body.put("paidPrice", usdAmount.getText().toString());
-                                    body.put("type", "BUY");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.PreferenceDialogLight);
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                requestRetriever.transaction(Urls.TRANSACTION, getApplicationContext(), new IRequestCallBack() {
+                                builder.setTitle("Confirm Buy Payment");
+                                builder.setMessage("Want to buy  " + coinAmount.getText().toString() + " " + CoinTypes.getShortcut(coinType) + "?");
+                                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onSuccess(Object response) {
-//                                    System.out.println(response.toString());
-                                        if (response.toString().equals("Transaction added")) {
-                                            Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " buyed", Toast.LENGTH_SHORT).show();
-
-                                            requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
-                                                @Override
-                                                public void onSuccess(Object coin) {
-
-                                                }
-                                            });
-                                        } else
-                                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    public void onClick(DialogInterface dialogInterface, int i) {
 
                                     }
+                                });
+                                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        JSONObject body = new JSONObject();
+                                        try {
+                                            body.put("coin", coinType.toString());
+                                            body.put("amount", coinAmount.getText().toString());
+                                            body.put("actualPrice", coin.getPrice());
+                                            body.put("paidPrice", usdAmount.getText().toString());
+                                            body.put("type", "BUY");
 
-                                }, body);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        requestRetriever.transaction(Urls.TRANSACTION, getApplicationContext(), new IRequestCallBack() {
+                                            @Override
+                                            public void onSuccess(Object response) {
+//                                    System.out.println(response.toString());
+                                                if (response.toString().equals("Transaction added")) {
+                                                    Toast.makeText(getApplicationContext(), CoinTypes.getName(coinType) + " buyed", Toast.LENGTH_SHORT).show();
+
+                                                    requestRetriever.getMoney(Urls.GETMONEY, getApplicationContext(), new IRequestCallBack() {
+                                                        @Override
+                                                        public void onSuccess(Object coin) {
+
+                                                        }
+                                                    });
+                                                } else
+                                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+
+                                            }
+
+                                        }, body);
+                                    }
+                                });
+                                dialog = builder.create();
+                                dialog.show();
+
+
                             } else
                                 Toast.makeText(getApplicationContext(), "Insufficient funds! Please add money!", Toast.LENGTH_LONG).show();
                         }
