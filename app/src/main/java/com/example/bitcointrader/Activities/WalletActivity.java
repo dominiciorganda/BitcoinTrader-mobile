@@ -45,7 +45,7 @@ public class WalletActivity extends AppCompatActivity {
     private WalletAdapter adapter;
     private TextView money;
     private TextView user;
-    private LinearLayout buy, sell, coinlist, topup;
+    private LinearLayout buy, sell, coinlist, topup, analytics;
     private AlertDialog dialog;
     private TextView totalFunds, walletFunds, accountFunds;
 
@@ -73,6 +73,13 @@ public class WalletActivity extends AppCompatActivity {
 
             }
         }, 2000);
+
+        analytics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WalletActivity.this, AnalyticsActivity.class));
+            }
+        });
 
         coinlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,6 +227,7 @@ public class WalletActivity extends AppCompatActivity {
         money = findViewById(R.id.money);
         user = findViewById(R.id.user);
         coinlist = findViewById(R.id.coinlist);
+        analytics = findViewById(R.id.analytics);
         buy = findViewById(R.id.buy);
         sell = findViewById(R.id.sell);
         topup = findViewById(R.id.topup);
