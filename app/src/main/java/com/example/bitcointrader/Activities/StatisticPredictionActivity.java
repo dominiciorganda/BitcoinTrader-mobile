@@ -15,6 +15,7 @@ import com.example.bitcointrader.Entities.Popup;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
 import com.example.bitcointrader.Request.RequestRetriever;
+import com.example.bitcointrader.util.CoinUrls;
 import com.example.bitcointrader.util.Urls;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.IMarker;
@@ -45,6 +46,7 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic_prediction);
 
+        initializeData();
 
         getValues();
         new Handler().postDelayed(new Runnable() {
@@ -63,7 +65,7 @@ public class StatisticPredictionActivity extends AppCompatActivity {
     }
 
     public void getValues() {
-        requestRetriever.getCoinList(Urls.BITCOIN + "/getAll", this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
+        requestRetriever.getCoinList(url + "/getAll", this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
             @Override
             public void onSuccess(List<Coin> coins) {
                 System.out.println(coins);
@@ -74,7 +76,7 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         });
     }
 
-    private float linearRegression(int x){
+    private float linearRegression(int x) {
         //constants
 //        a = 0.28587743 si b = 1.3548479
         float a = (float) 0.28587743;
@@ -82,7 +84,7 @@ public class StatisticPredictionActivity extends AppCompatActivity {
 
         // Functie: 10 ^ (a*ln(x) - b)
         float ln = (float) Math.log(x);
-        float result = a*ln - b;
+        float result = a * ln - b;
 
         return (float) Math.pow(10, result);
     }
@@ -98,9 +100,9 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         for (Coin data : chartCoins) {
             i++;
 
-            entries.add(new Entry(i,  scaleCbr(data.getPrice())));
+            entries.add(new Entry(i, scaleCbr(data.getPrice())));
             float result = linearRegression(i);
-            System.out.println(result);
+//            System.out.println(result);
             ent.add(new Entry(i, result));
         }
 
@@ -114,7 +116,29 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         dataSet.setValueTextSize(0);
         dataSet.setDrawHorizontalHighlightIndicator(false);
         dataSet.setDrawVerticalHighlightIndicator(false);
-        dataSet.setFillDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.orange));
+
+        CoinUrls coinUrls = CoinUrls.find(url);
+
+        switch (coinUrls) {
+            case BITCOIN:
+            case DOGECOIN:
+            case BINANCECOIN:
+                dataSet.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.orange));
+                break;
+            case ETHEREUM:
+            case LITECOIN:
+            case FILECOIN:
+                dataSet.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.lightblue));
+                break;
+            case ELROND:
+                dataSet.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.darkblue));
+                break;
+            case BITCOINCASH:
+                dataSet.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.lightgreen));
+                break;
+            default:
+                dataSet.setFillDrawable(ContextCompat.getDrawable(this, R.drawable.gradient));
+        }
 
         LineDataSet dataSet1 = new LineDataSet(ent, "");
         dataSet1.setDrawFilled(false);

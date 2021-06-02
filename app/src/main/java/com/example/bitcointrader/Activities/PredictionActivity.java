@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.bitcointrader.Entities.ChartType;
 import com.example.bitcointrader.Entities.Coin;
@@ -16,6 +18,7 @@ import com.example.bitcointrader.Fragments.Loading;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
 import com.example.bitcointrader.Request.RequestRetriever;
+import com.example.bitcointrader.util.CoinUrls;
 import com.example.bitcointrader.util.Urls;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.IMarker;
@@ -39,6 +42,10 @@ public class PredictionActivity extends AppCompatActivity {
     private View loadingScreen;
     private String url;
     private Intent intent;
+    private LinearLayout linearLayout;
+    private TextView textView;
+    private TextView information;
+    private String coin;
 
     @Override
     protected void onResume() {
@@ -55,17 +62,23 @@ public class PredictionActivity extends AppCompatActivity {
         setVisibilities();
         getValues();
 
+        String name = CoinUrls.find(url).toString().toLowerCase();
+        coin = name.substring(0, 1).toUpperCase() + name.substring(1);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 drawChart();
                 loading.disableLoadingScreen();
                 chart.setVisibility(View.VISIBLE);
+                linearLayout.setVisibility(View.VISIBLE);
 
+                textView.setText("" + coin + " price prediction");
+                information.setVisibility(View.VISIBLE);
             }
         }, 4500);
 
-//        System.out.println(url);
+//        System.out.println(CoinUrls.find(url));
     }
 
     public void initializeData() {
@@ -78,7 +91,11 @@ public class PredictionActivity extends AppCompatActivity {
         setLoadingScreen();
         chart = findViewById(R.id.chart);
         chart.setVisibility(View.GONE);
-
+        linearLayout = findViewById(R.id.layout2);
+        linearLayout.setVisibility(View.GONE);
+        textView = findViewById(R.id.predictionText);
+        information = findViewById(R.id.information);
+        information.setVisibility(View.GONE);
     }
 
     public void setLoadingScreen() {
@@ -119,10 +136,15 @@ public class PredictionActivity extends AppCompatActivity {
         LineData lineData = new LineData(dataSet);
         dataSet.setDrawFilled(true);
         if (chartCoins.size() > 0)
-            if (chartCoins.get(5).getPrice() > chartCoins.get(6).getPrice())
+            if (chartCoins.get(5).getPrice() > chartCoins.get(6).getPrice()) {
                 dataSet.setFillDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.downgradient));
-            else
+                information.setText("" + coin + " will decrease");
+                information.setTextColor(Color.RED);
+            } else {
                 dataSet.setFillDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.upgradient));
+                information.setText("" + coin + " will increase");
+                information.setTextColor(Color.GREEN);
+            }
         dataSet.setDrawCircles(true);
         dataSet.setDrawCircleHole(true);
         dataSet.setCircleHoleColor(Color.BLACK);

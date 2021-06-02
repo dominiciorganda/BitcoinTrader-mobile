@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="25dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black" />
             <!--                android:text="BITCOIN"-->
 
         </LinearLayout>
@@ -82,7 +83,8 @@
                     android:layout_height="wrap_content"
                     android:text="Actual"
                     android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
 
                 <TextView
@@ -110,7 +112,8 @@
                     android:layout_height="wrap_content"
                     android:text="Max"
                     android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/maxPrice"
@@ -140,7 +143,8 @@
                     android:layout_height="wrap_content"
                     android:text="2021 Min"
                     android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/anualMin"
@@ -172,7 +176,8 @@
                     android:layout_height="wrap_content"
                     android:text="2021 Max"
                     android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
 
                 <TextView
@@ -189,6 +194,36 @@
 
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/statisticPrediction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/baseline_batch_prediction_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prediction"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
@@ -217,7 +252,8 @@
             android:text="Prediction"
             android:textAlignment="center"
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

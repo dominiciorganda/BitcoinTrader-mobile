@@ -179,7 +179,7 @@ public class Chart extends Fragment {
         chart.invalidate(); // refresh
 
         IMarker marker;
-        
+
         if (chartType == ChartType.LOGARITMIC) {
             chart.getAxisLeft().setValueFormatter(new ValueFormatter() {
                 @Override

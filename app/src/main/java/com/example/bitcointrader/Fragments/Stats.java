@@ -41,7 +41,7 @@ public class Stats extends Fragment {
 
     // TODO: Rename and change types of parameters
     private Coin maxCoin, anualMax, anualMin, actualCoin;
-    private LinearLayout prediction;
+    private LinearLayout prediction, statisticPredciton;
     private String url;
 
     public Stats() {
@@ -88,6 +88,7 @@ public class Stats extends Fragment {
         } else
             System.out.println("ok");
         prediction = view.findViewById(R.id.prediction);
+        statisticPredciton = view.findViewById(R.id.statisticPrediction);
         return view;
     }
 
@@ -105,6 +106,18 @@ public class Stats extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), PredictionActivity.class);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
+                    System.out.println("hello");
+                }
+            });
+        }
+
+        if (statisticPredciton != null && url != null) {
+            statisticPredciton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), StatisticPredictionActivity.class);
                     intent.putExtra("url", url);
                     startActivity(intent);
                     System.out.println("hello");

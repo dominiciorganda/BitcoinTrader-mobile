@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.bitcointrader.Entities.ChartType;
 import com.example.bitcointrader.Entities.Coin;
@@ -27,6 +29,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +39,8 @@ public class AnalyticsActivity extends AppCompatActivity {
     private List<Coin> chartCoins = new ArrayList<>();
     private Loading loading;
     private View loadingScreen;
+    private LinearLayout linearLayout;
+    private TextView walletText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +56,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         }, 1000);
     }
 
-    public void getValues(){
+    public void getValues() {
         requestRetriever.getCoinList(Urls.ANALYTICS, this.getApplicationContext(), new IRequestCallBack<List<Coin>>() {
             @Override
             public void onSuccess(List<Coin> coins) {
@@ -58,6 +64,8 @@ public class AnalyticsActivity extends AppCompatActivity {
                 chartCoins.addAll(coins);
                 System.out.println(chartCoins);
                 loading.disableLoadingScreen();
+                linearLayout.setVisibility(View.VISIBLE);
+                walletText.setText("@" + CommonUtils.getPrefString(getApplicationContext(), "username") + " wallet evolution");
                 drawChart();
             }
         });
@@ -105,7 +113,8 @@ public class AnalyticsActivity extends AppCompatActivity {
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisRight().setDrawGridLines(false);
         chart.getDescription().setEnabled(false);
-        chart.getAxisLeft().setDrawLabels(false);
+        chart.getAxisLeft().setDrawLabels(true);
+        chart.getAxisLeft().setTextSize(15f);
         chart.getAxisRight().setDrawLabels(false);
         chart.getXAxis().setDrawLabels(false);
         chart.getLegend().setEnabled(false);
@@ -141,6 +150,9 @@ public class AnalyticsActivity extends AppCompatActivity {
         setLoadingScreen();
         LineChart chart = (LineChart) findViewById(R.id.diagramm);
         chart.setVisibility(View.GONE);
+        linearLayout = (LinearLayout) findViewById(R.id.layout1);
+        linearLayout.setVisibility(View.GONE);
+        walletText = (TextView) findViewById(R.id.walletText);
     }
 
 

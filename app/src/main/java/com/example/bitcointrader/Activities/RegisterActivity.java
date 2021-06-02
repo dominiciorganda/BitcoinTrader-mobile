@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.bitcointrader.R;
@@ -24,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText registerUsername;
     private EditText registerPassword;
     private EditText registerConfirmPassword;
+    private LinearLayout backToLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerUsername = (EditText) findViewById(R.id.registerUsername);
         registerPassword = (EditText) findViewById(R.id.registerPassword);
         registerConfirmPassword = (EditText) findViewById(R.id.registerConfirmPassword);
+        backToLayout = (LinearLayout) findViewById(R.id.backToLogin);
 
         Button register = (Button) findViewById(R.id.registerRegister);
         register.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +66,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }, body);
                 } else
                     Toast.makeText(RegisterActivity.this, "Invalid input", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        backToLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

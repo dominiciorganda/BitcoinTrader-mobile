@@ -25,7 +25,6 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="PreferenceDialogLight" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-    </style>
+    <style name="PreferenceDialogLight" parent="Theme.MaterialComponents.Light.Dialog.Alert"></style>
 
 </resources>
