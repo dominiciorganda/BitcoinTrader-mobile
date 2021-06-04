@@ -40,7 +40,7 @@ public class AnalyticsActivity extends AppCompatActivity {
     private Loading loading;
     private View loadingScreen;
     private LinearLayout linearLayout;
-    private TextView walletText;
+    private TextView walletText, noMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,14 @@ public class AnalyticsActivity extends AppCompatActivity {
     public void drawChart() {
         LineChart chart = (LineChart) findViewById(R.id.diagramm);
         chart.setVisibility(View.VISIBLE);
+
+        if(chartCoins.isEmpty())
+        {
+            chart.setVisibility(View.GONE);
+            System.out.println("No money in wallet");
+            noMoney.setVisibility(View.VISIBLE);
+            return;
+        }
 
         List<Entry> entries = new ArrayList<Entry>();
         int i = 0;
@@ -153,6 +161,8 @@ public class AnalyticsActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.layout1);
         linearLayout.setVisibility(View.GONE);
         walletText = (TextView) findViewById(R.id.walletText);
+        noMoney = findViewById(R.id.nomoney);
+        noMoney.setVisibility(View.GONE);
     }
 
 

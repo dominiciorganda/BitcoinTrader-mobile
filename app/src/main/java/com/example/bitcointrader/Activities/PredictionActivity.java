@@ -73,7 +73,7 @@ public class PredictionActivity extends AppCompatActivity {
                 chart.setVisibility(View.VISIBLE);
                 linearLayout.setVisibility(View.VISIBLE);
 
-                textView.setText("" + coin + " price prediction");
+                textView.setText("" + coin + " Price Prediction");
                 information.setVisibility(View.VISIBLE);
             }
         }, 4500);

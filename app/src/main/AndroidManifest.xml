@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.AnalyticsActivity"></activity>
+        <activity android:name=".Activities.ChangePasswordActivity"></activity>
+        <activity android:name=".Activities.AccountActivity" />
+        <activity android:name=".Activities.AnalyticsActivity" />
         <activity android:name=".Activities.StatisticPredictionActivity" />
         <activity android:name=".Activities.CardActivity" />
         <activity android:name=".Activities.TransactionActivity" />

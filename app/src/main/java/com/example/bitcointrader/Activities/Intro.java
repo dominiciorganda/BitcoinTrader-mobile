@@ -52,7 +52,7 @@ public class Intro extends AppCompatActivity {
         accountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("account");
+                startActivity(new Intent(Intro.this, AccountActivity.class));
             }
         });
     }

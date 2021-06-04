@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Wrong register credetentials", Toast.LENGTH_SHORT).show();
                             else {
                                 Toast.makeText(getApplicationContext(), "Activate your account via email", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                finish();
                             }
                         }
                     }, body);

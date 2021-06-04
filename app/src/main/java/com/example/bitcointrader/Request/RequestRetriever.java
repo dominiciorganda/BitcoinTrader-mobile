@@ -58,6 +58,7 @@ public class RequestRetriever {
                         CommonUtils.putPrefString(context, "token", user.getToken());
                         CommonUtils.putPrefString(context, "username", user.getUsername());
                         CommonUtils.putPrefString(context, "money", user.getMoney());
+                        CommonUtils.putPrefString(context, "email", user.getEmail());
                         callBack.onSuccess("succes");
                     }
                 }
