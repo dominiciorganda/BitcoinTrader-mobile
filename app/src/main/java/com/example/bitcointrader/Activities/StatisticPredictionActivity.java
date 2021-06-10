@@ -8,10 +8,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.bitcointrader.Entities.ChartType;
 import com.example.bitcointrader.Entities.Coin;
 import com.example.bitcointrader.Entities.Popup;
+import com.example.bitcointrader.Fragments.Loading;
 import com.example.bitcointrader.R;
 import com.example.bitcointrader.Request.IRequestCallBack;
 import com.example.bitcointrader.Request.RequestRetriever;
@@ -40,6 +43,14 @@ public class StatisticPredictionActivity extends AppCompatActivity {
     private List<Coin> chartCoins = new ArrayList<>();
     private Intent intent;
     private String url;
+    private Loading loading;
+    private View chart;
+    private View loadingScreen;
+    private LinearLayout linearLayout;
+    private TextView textView, recommand;
+    private String coin;
+    private TextView information;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +58,46 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistic_prediction);
 
         initializeData();
+        setVisibilities();
+
+        String name = CoinUrls.find(url).toString().toLowerCase();
+        coin = name.substring(0, 1).toUpperCase() + name.substring(1);
 
         getValues();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 drawChart();
-
+                loading.disableLoadingScreen();
+                chart.setVisibility(View.VISIBLE);
+                linearLayout.setVisibility(View.VISIBLE);
+                textView.setText("" + coin + " Price Trendline");
+                information.setVisibility(View.VISIBLE);
+                recommand.setVisibility(View.VISIBLE);
             }
-        }, 4500);
-//        initializeData();
+        }, 1000);
+    }
+
+    private void setVisibilities() {
+        loadingScreen = findViewById(R.id.loading_screen);
+        setLoadingScreen();
+        chart = findViewById(R.id.chart);
+        chart.setVisibility(View.GONE);
+        linearLayout = findViewById(R.id.layout2);
+        linearLayout.setVisibility(View.GONE);
+        textView = findViewById(R.id.predictionText);
+        information = findViewById(R.id.information);
+        information.setVisibility(View.GONE);
+        recommand = findViewById(R.id.recomandation);
+        recommand.setVisibility(View.GONE);
+
+    }
+
+    public void setLoadingScreen() {
+        Bundle bundle = new Bundle();
+        loading = new Loading();
+        loading.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.loading_screen, loading).commit();
     }
 
     public void initializeData() {
@@ -76,11 +117,24 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         });
     }
 
-    private float linearRegression(int x) {
+    private float linearRegressionBTC(int x) {
         //constants
 //        a = 0.28587743 si b = 1.3548479
         float a = (float) 0.28587743;
         float b = (float) 1.3548479;
+
+        // Functie: 10 ^ (a*ln(x) - b)
+        float ln = (float) Math.log(x);
+        float result = a * ln - b;
+
+        return (float) Math.pow(10, result);
+    }
+
+    private float linearRegressionETH(int x) {
+        //constants
+//        a = 0.28587743 si b = 1.3548479
+        float a = (float) 0.14124555;
+        float b = (float) 0.25059877;
 
         // Functie: 10 ^ (a*ln(x) - b)
         float ln = (float) Math.log(x);
@@ -95,15 +149,37 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         List<Entry> entries = new ArrayList<Entry>();
         List<Entry> ent = new ArrayList<Entry>();
         int i = 0;
-
+        CoinUrls coinUrls = CoinUrls.find(url);
 
         for (Coin data : chartCoins) {
             i++;
-
+            float result = 0;
             entries.add(new Entry(i, scaleCbr(data.getPrice())));
-            float result = linearRegression(i);
-//            System.out.println(result);
+
+            if (coinUrls != null) {
+                if (coinUrls == CoinUrls.BITCOIN)
+                    result = linearRegressionBTC(i);
+                else if (coinUrls == CoinUrls.ETHEREUM)
+                    result = linearRegressionETH(i);
+            }
             ent.add(new Entry(i, result));
+        }
+
+        float result = 0;
+        if (coinUrls != null) {
+            if (coinUrls == CoinUrls.BITCOIN)
+                result = linearRegressionBTC(chartCoins.size());
+            else if (coinUrls == CoinUrls.ETHEREUM)
+                result = linearRegressionETH(chartCoins.size());
+        }
+//        System.out.println(result);
+//        System.out.println(scaleCbr(chartCoins.get(chartCoins.size() - 1).getPrice()));
+        if (result > scaleCbr(chartCoins.get(chartCoins.size() - 1).getPrice())) {
+            information.setTextColor(Color.GREEN);
+            information.setText("Invest in " + coin);
+        } else {
+            information.setTextColor(Color.RED);
+            information.setText("Don't invest in " + coin);
         }
 
 //        System.out.println(chartCoins);
@@ -117,7 +193,6 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         dataSet.setDrawHorizontalHighlightIndicator(false);
         dataSet.setDrawVerticalHighlightIndicator(false);
 
-        CoinUrls coinUrls = CoinUrls.find(url);
 
         switch (coinUrls) {
             case BITCOIN:
@@ -144,7 +219,7 @@ public class StatisticPredictionActivity extends AppCompatActivity {
         dataSet1.setDrawFilled(false);
         dataSet1.setDrawCircles(false);
         dataSet1.setDrawCircleHole(false);
-
+        dataSet1.setLineWidth(5);
         dataSet1.setValueTextSize(0);
         dataSet1.setDrawHorizontalHighlightIndicator(false);
         dataSet1.setDrawVerticalHighlightIndicator(false);
@@ -175,8 +250,21 @@ public class StatisticPredictionActivity extends AppCompatActivity {
 
         });
         chart.getAxisLeft().setAxisMinimum(scaleCbr(1));
-        chart.getAxisLeft().setAxisMaximum(scaleCbr(10000000));
-        chart.getAxisLeft().setLabelCount(8, true);
+        chart.getAxisLeft().setAxisMaximum(scaleCbr(100000));
+        chart.getAxisLeft().setLabelCount(6, true);
+
+        Legend legend = chart.getLegend();
+        LegendEntry l1 = new LegendEntry(coin + "s all prices", Legend.LegendForm.SQUARE, 15f, 2f, null, Color.BLUE);
+        if (coin.equals("Bitcoin"))
+            l1.formColor = Color.parseColor("#fd8500");
+        else
+            l1.formColor = Color.parseColor("#4d88d3");
+        LegendEntry l2 = new LegendEntry("Trendline", Legend.LegendForm.SQUARE, 15f, 10f, null, Color.parseColor("#99ecff"));
+
+        legend.setCustom(new LegendEntry[]{l1, l2});
+        legend.setTextSize(20f);
+        legend.setEnabled(true);
+
         chart.invalidate(); // refresh
 
 
@@ -202,11 +290,11 @@ public class StatisticPredictionActivity extends AppCompatActivity {
     }
 
     private float scaleCbr(double cbr) {
-        return (float) (Math.log10(cbr));
+        return (float) (Math.log(cbr));
     }
 
     private float unScaleCbr(double cbr) {
-        double calcVal = Math.pow(10, cbr);
+        double calcVal = Math.exp(cbr);
         return (float) (calcVal);
     }
 }

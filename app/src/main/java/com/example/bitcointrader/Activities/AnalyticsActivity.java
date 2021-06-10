@@ -75,8 +75,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         LineChart chart = (LineChart) findViewById(R.id.diagramm);
         chart.setVisibility(View.VISIBLE);
 
-        if(chartCoins.isEmpty())
-        {
+        if (chartCoins.isEmpty()) {
             chart.setVisibility(View.GONE);
             System.out.println("No money in wallet");
             noMoney.setVisibility(View.VISIBLE);

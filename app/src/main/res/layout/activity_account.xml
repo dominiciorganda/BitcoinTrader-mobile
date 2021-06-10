@@ -47,8 +47,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/baseline_settings_24"
-            android:layout_marginTop="30dp"
-            />
+            android:layout_marginTop="30dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,8 +57,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:layout_below="@id/setting"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

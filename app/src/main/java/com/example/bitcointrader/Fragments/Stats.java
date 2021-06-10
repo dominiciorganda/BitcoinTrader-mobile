@@ -114,15 +114,20 @@ public class Stats extends Fragment {
         }
 
         if (statisticPredciton != null && url != null) {
-            statisticPredciton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), StatisticPredictionActivity.class);
-                    intent.putExtra("url", url);
-                    startActivity(intent);
-                    System.out.println("hello");
-                }
-            });
+            CoinUrls coinUrls = CoinUrls.find(url);
+
+            if (coinUrls == CoinUrls.BITCOIN || coinUrls == CoinUrls.ETHEREUM) {
+                statisticPredciton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), StatisticPredictionActivity.class);
+                        intent.putExtra("url", url);
+                        startActivity(intent);
+                        System.out.println("hello");
+                    }
+                });
+            } else
+                statisticPredciton.setVisibility(View.GONE);
         }
 
         if (url != null) {
